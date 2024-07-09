@@ -13,19 +13,20 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 'black': '#0B132B',
                 'dark-blue': '#1c2541',
                 'light-blue': '#3A506B',
-                'teal': '#81FFD9',
+                'teal': '#72dbbc',
                 'green': '#5BC0B3',
                 'white': '#FFFFFF',
                 'dark-black': '#222222',
                 'red': '#ee4266',
                 'yellow': '#ffff82',
-                'pink': '#d1b1c8'
+                'pink': '#d1b1c8',
+                'gray': '#FAFAFA'
             }
         },
     },
