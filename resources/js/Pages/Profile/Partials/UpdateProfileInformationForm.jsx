@@ -35,7 +35,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
                     <TextInput
                         id="name"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full text-dark-black"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         required
@@ -52,7 +52,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <TextInput
                         id="email"
                         type="email"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full text-dark-black"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required

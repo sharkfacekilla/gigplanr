@@ -58,11 +58,11 @@ export default function DeleteUserForm({ className = '' }) {
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
-                    <h2 className="text-lg font-medium text-gray-900">
+                    <h2 className="text-lg font-medium text-dark-black">
                         Are you sure you want to delete your account?
                     </h2>
 
-                    <p className="mt-1 text-sm text-gray-600">
+                    <p className="mt-1 text-sm text-dark-black">
                         Once your account is deleted, all of its resources and data will be permanently deleted. Please
                         enter your password to confirm you would like to permanently delete your account.
                     </p>
@@ -82,7 +82,7 @@ export default function DeleteUserForm({ className = '' }) {
                             placeholder="Password"
                         />
 
-                        <InputError message={errors.password} className="mt-2" />
+                        <InputError message={errors.password} className="mt-2 text-red" />
                     </div>
 
                     <div className="mt-6 flex justify-end">
