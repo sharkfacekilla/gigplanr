@@ -1,5 +1,5 @@
 <!-- <p align="center"><a href="/" target="_blank"><img src="https://imgur.com/GQEbFRZ" width="400" alt="Gigplanr Logo"></a></p> -->
-<a href="https://lh3.googleusercontent.com/drive-viewer/AKGpihY0QwgSXKRN_PyCN2A1twkMNGBgfdSHM0CBmWgr_OdSvzQcNlruJtIA0u3Gqj3EnWJ6iAOVKT40YwCgfNXQWlZSzhp-q0yq7Q=s1600-rw-v1?source=screenshot.guru"> <img src="https://lh3.googleusercontent.com/drive-viewer/AKGpihY0QwgSXKRN_PyCN2A1twkMNGBgfdSHM0CBmWgr_OdSvzQcNlruJtIA0u3Gqj3EnWJ6iAOVKT40YwCgfNXQWlZSzhp-q0yq7Q=s1600-rw-v1" /> </a>
+<a href="/"> <img src="https://lh3.googleusercontent.com/drive-viewer/AKGpihY0QwgSXKRN_PyCN2A1twkMNGBgfdSHM0CBmWgr_OdSvzQcNlruJtIA0u3Gqj3EnWJ6iAOVKT40YwCgfNXQWlZSzhp-q0yq7Q=s1600-rw-v1" /> </a>
 
 ## About GigPlanr
 
