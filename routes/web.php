@@ -52,4 +52,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
+Route::get('/verify-test', function () {
+    // Get a user for demo purposes
+    $user = User::find(1);
+
+    if (!$user) {
+        return 'User not found!';
+    }
+
+    // Send the verification notification
+    $user->notify(new VerifyEmail);
+    return 'sent';
+});
+
 require __DIR__.'/auth.php';
