@@ -1,13 +1,17 @@
 <?php
 
-use App\User;
+use App\Models\User;
 use Inertia\Inertia;
-use App\Mail\VerifyEmail;
+use App\Http\Controllers;
+use App\Mail\EmailVerify;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\ProfileController;
 use Tests\Feature\Auth\EmailVerificationTest;
+use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 
 
 Route::get('/', function () {
@@ -18,6 +22,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
@@ -46,11 +51,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-Route::get('/verify-test', function () {
-    // Get a user for demo purposes
-    $user = App\Models\User::find(1);
-    return (new Illuminate\Auth\Notifications\VerifyEmail())->toMail($user);
-});
 
 require __DIR__.'/auth.php';
