@@ -62,7 +62,11 @@ Route::get('/verify-test', function () {
 
     // Send the verification notification
     $user->notify(new VerifyEmail);
-    return 'sent';
+    
+    $notification = new VerifyEmail;
+    $notificationView = $notification ->toMail($user)->render();
+    // return 'sent';
+    return response($notificationView);
 });
 
 require __DIR__.'/auth.php';
