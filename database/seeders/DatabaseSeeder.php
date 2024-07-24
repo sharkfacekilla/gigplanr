@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Songs;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,5 +20,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@admin.com',
         ]);
+
+        Songs::factory(1)->create();
     }
 }

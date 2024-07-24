@@ -14,12 +14,15 @@ return new class extends Migration
         Schema::create('songs', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('length');
+            $table->integer('length')->nullable();
             $table->string('artist')->nullable();
+            $table->string('album')->nullable();
+            $table->string('album_cover')->nullable();
             $table->integer('bpm')->nullable();
             $table->string('key')->nullable();
             $table->string('tuning')->nullable();
             $table->boolean('cover')->default(false)->nullable();
+            $table->boolean('metronome')->default(false)->nullable();
             $table->timestamps();
         });
     }

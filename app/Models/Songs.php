@@ -10,7 +10,13 @@ class Songs extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title'
+        'title',
+        'length',
+        'artist',
+        'bpm',
+        'key',
+        'tuning',
+        'cover',
+        'metronome'
     ];
-    
 }

@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
 
-export default function Library({ auth }) {
+export default function Index({ auth, songs }) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Library" />
@@ -13,7 +13,7 @@ export default function Library({ auth }) {
                     <div className="bg-dark-black overflow-hidden">
                         <div className="p-6 bg-dark-black">
                             <h1 className="text-2xl text-white">Library</h1>
-                            <Table />
+                            <Table songs={songs} />
                         </div>
                     </div>
                 </div>

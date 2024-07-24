@@ -14,8 +14,9 @@ class SongController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Admin/Library/Library', [
-            'songs' => SongResource::collection(Songs::all())
+        $songs = Songs::orderBy('id', 'desc')->paginate(10)->onEachSide(1);
+        return Inertia::render('Admin/Library/Index', [
+            'songs' => SongResource::collection($songs)
         ]);
     }
 

@@ -7,6 +7,7 @@ use App\Mail\EmailVerify;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\SongController;
 use App\Http\Controllers\ProfileController;
 use Tests\Feature\Auth\EmailVerificationTest;
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -41,9 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 //Admin Routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/library', function () {
-        return Inertia::render('Admin/Library/Library');
-    })->name('library');
+    Route::get('/library', [SongController::class, 'index'])->name('library.index');
 });
 
 //Visitor Routes
