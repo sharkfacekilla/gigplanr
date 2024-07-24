@@ -1,3 +1,4 @@
+import Table from '@/Components/Table/TableV1/Table';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
@@ -12,6 +13,7 @@ export default function Library({ auth }) {
                     <div className="bg-dark-black overflow-hidden">
                         <div className="p-6 bg-dark-black">
                             <h1 className="text-2xl text-white">Library</h1>
+                            <Table />
                         </div>
                     </div>
                 </div>
