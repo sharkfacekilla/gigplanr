@@ -1,5 +1,6 @@
 import ApplicationLogo from '@/Components/ApplicationLogo';
-import BriefAbout from '@/Components/BriefAbout';
+import BriefAbout from '@/Components/VisitorComponents/BriefAbout';
+import Footer from '@/Components/VisitorComponents/Footer';
 import SplashScreen from '@/Components/VisitorComponents/SplashScreen';
 import { Link, Head } from '@inertiajs/react';
 
@@ -14,7 +15,6 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
     return (
         <>
             <Head title="Welcome" />
-
 
             <div className="bg-dark-black text-white bg-img">
             <nav className="bg-dark-black fixed w-full top-0 z-10">
@@ -61,9 +61,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                             <SplashScreen />
                             <BriefAbout />
                         </main>
-
-                        <footer className="py-16 text-center text-sm text-black dark:text-white/70">
-                        </footer>
+                        <Footer />
                     </div>
                 </div>
             </div>
