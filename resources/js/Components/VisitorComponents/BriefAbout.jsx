@@ -22,7 +22,7 @@ export default function BriefAbout(){
                 Welcome to GigPlanr
               </h1>
               <p className="text-white text-sm md:text-base">
-                GigPlanr is your ultimate companion for organizing successful gigs. With intuitive tools and seamless integration, you can manage every aspect of your event from start to finish. Whether it's a concert, conference, or party, GigPlanr makes planning easy and stress-free.
+                GigPlanr ("Gig Planner") is your ultimate companion for organizing successful gigs. With intuitive tools and seamless integration, you can manage every aspect of your event from start to finish. Whether it's a concert, conference, or party, GigPlanr makes planning easy and stress-free.
               </p>
               <a href="/register" className="mt-4 px-4 py-2 md:px-6 md:py-3 bg-dark-blue text-white rounded-full font-semibold shadow-md hover:bg-light-blue">
                 Get Started

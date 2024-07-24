@@ -5,7 +5,7 @@
 
 ### A webapp for musicians, by musicians.
 
-GigPlanr is a tool meticulously crafted with musicians in mind, designed to streamline and enhance the gig planning process. At its heart, GigPlanr functions as an advanced setlist organizer, offering artists a reliable way to manage and optimize their performance sets.
+GigPlanr ("Gig Planner") is a tool meticulously crafted with musicians in mind, designed to streamline and enhance the gig planning process. At its heart, GigPlanr functions as an advanced setlist organizer, offering artists a reliable way to manage and optimize their performance sets.
 
 Gone are the days of fretting over setlist timings and the dreaded surprise of running over time during a gig. GigPlanr allows artists to create and fine-tune their setlists with ease, ensuring that every song is perfectly timed and seamlessly integrated into their performance. Its intuitive interface helps musicians track and adjust their set durations, giving them the confidence to deliver a polished and well-paced show.
 
