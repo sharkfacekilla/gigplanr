@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.bg-img {
+    background-image: url('img/layered-waves-haikei.svg');
+    background-attachment:fixed;
+    background-size: cover;
+    position: relative;
+    background-repeat: no-repeat;
+}
+
+.rotate-3d {
+    transform: perspective(800px) rotateX(45deg) rotateY(-5deg) rotateZ(30deg);
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .rotate-3d:hover {
+    transform: perspective(800px) rotateX(0) rotateY(0);
+  }
