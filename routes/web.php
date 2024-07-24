@@ -40,7 +40,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 //Admin Routes
-
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/library', function () {
+        return Inertia::render('Admin/Library/Library');
+    })->name('library');
+});
 
 //Visitor Routes
 

@@ -1,15 +1,18 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 
-export default function Dashboard({ auth }) {
+
+export default function Library({ auth }) {
     return (
         <AuthenticatedLayout user={auth.user}>
-            <Head title="Dashboard" />
+            <Head title="Library" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-dark-black overflow-hidden shadow-sm sm:rounded-lg">
-                        
+                    <div className="bg-dark-black overflow-hidden">
+                        <div className="p-6 bg-dark-black">
+                            <h1 className="text-2xl text-white">Library</h1>
+                        </div>
                     </div>
                 </div>
             </div>
