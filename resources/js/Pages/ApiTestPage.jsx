@@ -9,7 +9,8 @@ import SearchCard from "@/Components/SearchCards/SearchCard";
 export default function ApiTestPage({ auth }) {
     const [results, setResults] = useState({
         artists: [],
-        albums: []
+        albums: [],
+        tracks: []
     });
     const [query, setQuery] = useState('');
     const [initialQuery, setInitialQuery] = useState('');
@@ -20,10 +21,13 @@ export default function ApiTestPage({ auth }) {
     const [authenticated, setAuthenticated] = useState(false);
     const containerRef = useRef(null);
 
-    useEffect(() => {
+    /**
+     * Authenticate the user to Spotify API.
+     */
+    const authUser = async() => {
         const hash = window.location.hash;
         let token = localStorage.getItem('spotify_access_token');
-
+    
         if (!token && hash) {
             const parsedHash = hash.substring(1).split('&').reduce((initial, item) => {
                 if (item) {
@@ -32,10 +36,10 @@ export default function ApiTestPage({ auth }) {
                 }
                 return initial;
             }, {});
-
+    
             window.location.hash = '';
             token = parsedHash.access_token;
-
+    
             if (token) {
                 localStorage.setItem('spotify_access_token', token);
                 setAuthenticated(true);
@@ -43,8 +47,8 @@ export default function ApiTestPage({ auth }) {
         } else if (token) {
             setAuthenticated(true);
         }
-    }, []);
 
+    }
 
     /**
      * Handle's the search form submission. Connects to the Spotify API and fetches artists and albums based on the query.
@@ -69,6 +73,7 @@ export default function ApiTestPage({ auth }) {
         const accessToken = localStorage.getItem('spotify_access_token');
         const artists = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=5`;
         const albums = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=album&limit=15`;
+        const tracks = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`;
         const artistsResponse = await fetch(artists, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -82,10 +87,20 @@ export default function ApiTestPage({ auth }) {
             }
         });
         const albumsData = await albumsResponse.json();
+        
+        const tracksResponse = await fetch(tracks, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        const tracksData = await tracksResponse.json();
+        console.log(tracksData);
 
         setResults({
             artists: artistsData.artists?.items || [],
-            albums: albumsData.albums?.items || []
+            albums: albumsData.albums?.items || [],
+            tracks: tracksData.tracks?.items || []
         });
 
         setInitialQuery(query);
@@ -94,19 +109,31 @@ export default function ApiTestPage({ auth }) {
         setLoading(false);
     };
 
-    // Function to load more items.
-    const loadMoreItems = () => {
-        setVisibleItems((prev) => prev + 8);
-        containerRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
 
     // Function to prioritize query items
     const prioritizeResults = (items, query) => {
+        const lowercaseQuery = query.toLowerCase();
         return items.sort((a, b) => {
-            if (a.name.toLowerCase().includes(query.toLowerCase()) && !b.name.toLowerCase().includes(query.toLowerCase())) {
+
+            const aQuery = a.name.toLowerCase().includes(lowercaseQuery);
+            const bQuery = b.name.toLowerCase().includes(lowercaseQuery);
+
+            if (aQuery && a.type === 'artist' && !(bQuery && b.type === 'artist')) {
                 return -1;
             }
-            if (!a.name.toLowerCase().includes(query.toLowerCase()) && b.name.toLowerCase().includes(query.toLowerCase())) {
+            if (!(aQuery && a.type === 'artist') && bQuery && b.type === 'artist') {
+                return 1;
+            }
+            if (aQuery && a.type === 'album' && !(bQuery && b.type === 'album')) {
+                return -1;
+            }
+            if (!(aQuery && a.type === 'album') && bQuery && b.type === 'album') {
+                return 1;
+            }
+            if (aQuery && a.type === 'track' && !(bQuery && b.type === 'track')) {
+                return -1;
+            }
+            if (!(aQuery && a.type === 'track') && bQuery && b.type === 'track') {
                 return 1;
             }
             return 0;
@@ -114,7 +141,8 @@ export default function ApiTestPage({ auth }) {
     };
 
     // Combine and prioritize results
-    const combinedResults = [
+    const combineAndPrioritize = (results, query) => {
+        const combinedResults = [
         ...results.artists.map(item => ({
             id: item.id,
             name: item.name,
@@ -126,12 +154,29 @@ export default function ApiTestPage({ auth }) {
             name: item.name,
             images: item.images,
             type: 'album'
+        })),
+        ...results.tracks.map(item => ({
+            id: item.id,
+            name: item.name,
+            images: item.album.images,
+            type: 'track'
         }))
     ];
+    return prioritizeResults(combinedResults, query);
+};
 
     // Prioritize results
-    const prioritizedResults = prioritizeResults(combinedResults, initialQuery);
+    const prioritizedResults = combineAndPrioritize(results, initialQuery);
 
+    useEffect(() => {
+        authUser();
+    }, []);
+
+    // Function to load more items.
+    const loadMoreItems = () => {
+        setVisibleItems((prev) => prev + 8);
+        containerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
     return (
         <>
             <AuthenticatedLayout user={auth.user}>
