@@ -23,8 +23,8 @@ class SongsFactory extends Factory
             'artist' => $this->faker->name(),
             'album' => $this->faker->name(),
             'bpm' => $this->faker->numberBetween(60, 200),
-            'key' => $this->faker->randomElement(['A', 'B', 'C', 'D', 'E', 'F', 'G']),
-            'tuning' => $this->faker->randomElement(['E Standard', 'Drop D', 'Half Step Down', 'Full Step Down']),
+            'key' => $this->faker->randomElement(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'A#', 'C#', 'D#', 'F#', 'G#', 'Bb', 'Eb', 'Ab', 'Db', 'Gb',]),
+            'tuning' => $this->faker->randomElement(['E Standard', 'Drop D', 'Half Step Down', 'Full Step Down', 'Drop C', 'Drop B', 'Open C', 'Open D', 'Open E', 'DADGAD']),
             'cover' => $this->faker->boolean(),
             'metronome' => $this->faker->boolean()
         ];

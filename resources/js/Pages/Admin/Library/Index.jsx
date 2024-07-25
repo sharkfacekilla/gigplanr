@@ -9,9 +9,9 @@ export default function Index({ auth, songs }) {
             <Head title="Library" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-dark-black overflow-hidden">
-                        <div className="p-6 bg-dark-black">
+                <div className="max-w-8xl mx-auto sm:px-6 lg:px-8">
+                    <div className="overflow-hidden">
+                        <div className="p-6">
                             <h1 className="text-2xl text-white">Library</h1>
                             <Table songs={songs} />
                         </div>
@@ -20,4 +20,4 @@ export default function Index({ auth, songs }) {
             </div>
         </AuthenticatedLayout>
     );
-}
+};

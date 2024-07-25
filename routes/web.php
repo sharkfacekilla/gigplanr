@@ -87,4 +87,10 @@ Route::get('/verify-test', function () {
     return response($notificationView);
 });
 
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/test', function() {
+        return Inertia::render('ApiTestPage');
+    })->name('test');;
+});
+
 require __DIR__.'/auth.php';

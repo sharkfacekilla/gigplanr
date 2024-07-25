@@ -10,4 +10,8 @@ export default defineConfig({
         }),
         react(),
     ],
+    define: {
+        'process.env': process.env
+    },
+    envPrefix: 'VITE_', // Prefix for environment variables
 });

@@ -10,7 +10,7 @@ export default function Pagination({ links }) {
           key={link.label}
           className={
             "inline-block py-2 px-3 rounded-lg text-black dark:text-white text-xs " +
-            (link.active ? "bg-blue " : " ") +
+            (link.active ? "bg-light-blue " : " ") +
             (!link.url
               ? "!text-white/20 dark:text-black/20 cursor-not-allowed "
               : "hover:bg-teal")
