@@ -13,11 +13,38 @@ export default function ApiTestPage({ auth }) {
     });
     const [query, setQuery] = useState('');
     const [initialQuery, setInitialQuery] = useState('');
-    const [visibleItems, setVisibleItems] = useState(9);
+    const [visibleItems, setVisibleItems] = useState(8);
     const [loading, setLoading] = useState(false);
     const [search, setSearch] = useState(false);
     const [searchText, setSearchText] = useState('');
+    const [authenticated, setAuthenticated] = useState(false);
     const containerRef = useRef(null);
+
+    useEffect(() => {
+        const hash = window.location.hash;
+        let token = localStorage.getItem('spotify_access_token');
+
+        if (!token && hash) {
+            const parsedHash = hash.substring(1).split('&').reduce((initial, item) => {
+                if (item) {
+                    const parts = item.split('=');
+                    initial[parts[0]] = decodeURIComponent(parts[1]);
+                }
+                return initial;
+            }, {});
+
+            window.location.hash = '';
+            token = parsedHash.access_token;
+
+            if (token) {
+                localStorage.setItem('spotify_access_token', token);
+                setAuthenticated(true);
+            }
+        } else if (token) {
+            setAuthenticated(true);
+        }
+    }, []);
+
 
     /**
      * Handle's the search form submission. Connects to the Spotify API and fetches artists and albums based on the query.
@@ -28,10 +55,18 @@ export default function ApiTestPage({ auth }) {
     const handleSearch = async (e) => {
         e.preventDefault();
 
+        if (!authenticated) {
+            const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+            const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
+            const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user-library-read`;
+            window.location.href = authUrl;
+            return;
+        }
         setLoading(true);
         setSearch(true);
 
-        const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
+        // const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
+        const accessToken = localStorage.getItem('spotify_access_token');
         const artists = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=5`;
         const albums = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=album&limit=15`;
         const artistsResponse = await fetch(artists, {
@@ -54,14 +89,14 @@ export default function ApiTestPage({ auth }) {
         });
 
         setInitialQuery(query);
-        setVisibleItems(9);
+        setVisibleItems(8);
         setSearchText(query);
         setLoading(false);
     };
 
     // Function to load more items.
     const loadMoreItems = () => {
-        setVisibleItems((prev) => prev + 9);
+        setVisibleItems((prev) => prev + 8);
         containerRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
@@ -104,16 +139,33 @@ export default function ApiTestPage({ auth }) {
                 <h1 className="text-2xl text-white">API Test Page</h1>
                 <p className="text-white">Welcome {auth.user.name}!</p>
                 <div className="overflow-x-scroll md:overflow-hidden">
-                    <form onSubmit={handleSearch}>
-                        <div className="relative mx-auto max-w-[600px]">
-                            <AppleLookinSearchBar
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                                onSubmit={handleSearch}
-                                placeholder="Search for an artist or album"
-                            />
+                {authenticated ? (
+                        <form onSubmit={handleSearch}>
+                            <div className="relative mx-auto max-w-[600px]">
+                                <AppleLookinSearchBar
+                                    value={query}
+                                    onChange={(e) => setQuery(e.target.value)}
+                                    onSubmit={handleSearch}
+                                    placeholder="Search for an artist or album"
+                                />
+                            </div>
+                        </form>
+                    ) : (
+                        <div className="text-center text-white">
+                            <p>You need to authenticate with Spotify to search.</p>
+                            <button
+                                onClick={() => {
+                                    const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+                                    const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
+                                    const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user-library-read`;
+                                    window.location.href = authUrl;
+                                }}
+                                className="px-4 py-2 text-white bg-dark-black rounded-md"
+                            >
+                                Authenticate with Spotify
+                            </button>
                         </div>
-                    </form>
+                    )}
                     <div className="flex items-center justify-center mt-12">
                         {search && 
                             <div>
@@ -123,8 +175,8 @@ export default function ApiTestPage({ auth }) {
                         }
                     </div>
                     <div className="mt-12 mb-24 flex items-center">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full mx-auto">
-                            {prioritizedResults.slice(0, visibleItems).map((item) => (
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl w-3/4 md:w-full mx-auto">
+                    {prioritizedResults.slice(0, visibleItems).map((item) => (
                                 <SearchCard key={item.id} item={item} />
                             ))}
                         </div>

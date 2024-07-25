@@ -12,7 +12,7 @@ export default function SearchCard({ item }) {
             )}
             {/* Render title */}
             <div className="p-4 flex bg-dark-black flex-col flex-1">
-                <h3 className="text-lg text-white font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap">
+                <h3 className="text-lg text-center text-white font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap">
                     {title}
                 </h3>
             </div>
