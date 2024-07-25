@@ -8,7 +8,7 @@ import SearchCard from "@/Components/SearchCards/SearchCard";
 
 export default function ApiTestPage({ auth }) {
     const [query, setQuery] = useState('');
-    const [initialQuery, setInitialQuery] = useState(''); // Added state for initial query
+    const [initialQuery, setInitialQuery] = useState('');
     const [results, setResults] = useState({
         artists: [],
         albums: []
@@ -47,7 +47,7 @@ export default function ApiTestPage({ auth }) {
             albums: albumsData.albums?.items || []
         });
 
-        setInitialQuery(query); // Set initial query after fetching results
+        setInitialQuery(query);
         setVisibleItems(9);
         setSearchText(query);
         setLoading(false);
@@ -87,7 +87,7 @@ export default function ApiTestPage({ auth }) {
         }))
     ];
 
-    const prioritizedResults = prioritizeResults(combinedResults, initialQuery); // Use initial query for prioritization
+    const prioritizedResults = prioritizeResults(combinedResults, initialQuery);
 
     return (
         <>
@@ -134,7 +134,6 @@ export default function ApiTestPage({ auth }) {
                     )}
                     {search && (
                         <p className="mt-12 mb-32 text-md text-center text-white">Don't see what you're looking for? <span className="text-dark-black border border-white rounded-lg ms-2 px-2.5 py-2.5 bg-white">Add it here</span></p>
-
                     )}
                 </div>
             </AuthenticatedLayout>
