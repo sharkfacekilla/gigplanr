@@ -7,18 +7,23 @@ import AppleLookinSearchBar from "@/Components/AppleLookinSearchBar";
 import SearchCard from "@/Components/SearchCards/SearchCard";
 
 export default function ApiTestPage({ auth }) {
-    const [query, setQuery] = useState('');
-    const [initialQuery, setInitialQuery] = useState('');
     const [results, setResults] = useState({
         artists: [],
         albums: []
     });
+    const [query, setQuery] = useState('');
+    const [initialQuery, setInitialQuery] = useState('');
     const [visibleItems, setVisibleItems] = useState(9);
     const [loading, setLoading] = useState(false);
-    const containerRef = useRef(null);
     const [search, setSearch] = useState(false);
     const [searchText, setSearchText] = useState('');
+    const containerRef = useRef(null);
 
+    /**
+     * Handle's the search form submission. Connects to the Spotify API and fetches artists and albums based on the query.
+     * TODO: Implement tracks for this maybe?
+     * @param {event} e the event object
+     */
     const handleSearch = async (e) => {
         e.preventDefault();
 
@@ -33,13 +38,13 @@ export default function ApiTestPage({ auth }) {
                 Authorization: `Bearer ${accessToken}`
             }
         });
+        const artistsData = await artistsResponse.json();
+
         const albumsResponse = await fetch(albums, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
         });
-
-        const artistsData = await artistsResponse.json();
         const albumsData = await albumsResponse.json();
 
         setResults({
@@ -53,6 +58,7 @@ export default function ApiTestPage({ auth }) {
         setLoading(false);
     };
 
+    // Function to load more items.
     const loadMoreItems = () => {
         setVisibleItems((prev) => prev + 9);
         containerRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -87,6 +93,7 @@ export default function ApiTestPage({ auth }) {
         }))
     ];
 
+    // Prioritize results
     const prioritizedResults = prioritizeResults(combinedResults, initialQuery);
 
     return (
@@ -139,4 +146,4 @@ export default function ApiTestPage({ auth }) {
             </AuthenticatedLayout>
         </>
     );
-}
+};
