@@ -1,17 +1,21 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/QVTZ7Db3Y2Q
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
-export default function Component({key, track}) {
-    console.log(track.album.name);
-    console.log(track.album.images[1]);
+export default function SearchCard({ item }) {
+    const imageUrl = item?.images?.[0]?.url || '';  // Default to an empty string if undefined
+    const title = item?.name || 'Unknown';          // Default to 'Unknown' if name is undefined
+
     return (
-      <div key={key} className="w-full mx-auto max-w-sm rounded-lg overflow-hidden flex flex-row border border-white/50">
-        <img src={track.album.images[1].url} alt="Card Image" className="h-[200px] w-1/2 object-cover" />
-        <div className="p-4 flex items-center justify-center flex-1">
-          <h3 className="text-xl text-white font-semibold">{track.album.name}</h3>
+        <div className="w-full mx-auto max-w-xs sm:max-w-sm rounded-3xl overflow-hidden flex flex-col shadow-lg shadow-white/10">
+            {/* Render image */}
+            {imageUrl ? (
+                <img src={imageUrl} alt={title} className="h-100 w-full object-cover" />
+            ) : (
+                <div className="w-full h-40 bg-gray-200 flex items-center justify-center text-gray-600">No Image</div>
+            )}
+            {/* Render title */}
+            <div className="p-4 flex bg-dark-black flex-col flex-1">
+                <h3 className="text-lg text-white font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap">
+                    {title}
+                </h3>
+            </div>
         </div>
-      </div>
-    )
-  }
+    );
+}

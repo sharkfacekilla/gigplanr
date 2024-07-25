@@ -14,7 +14,7 @@ export default function AppleLookinSearchBar({value, onChange}) {
               type="text"
               value={value}
               onChange={onChange}
-              placeholder="Search for an album or track..."
+              placeholder="Search for an album or artist..."
               className="w-full py-4 pl-12 pr-4 bg-dark-black text-white rounded-full focus:ring-2 focus:ring-teal"
               />
           </div>
