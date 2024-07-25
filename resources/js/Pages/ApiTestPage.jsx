@@ -22,6 +22,7 @@ export default function ApiTestPage({ auth }) {
     /**
      * Handle's the search form submission. Connects to the Spotify API and fetches artists and albums based on the query.
      * TODO: Implement tracks for this maybe?
+     * TODO: Make a way to search either Spotify or Apple Music (?) or both
      * @param {event} e the event object
      */
     const handleSearch = async (e) => {
