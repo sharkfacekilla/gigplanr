@@ -6,16 +6,16 @@ import PrimaryButton from "../PrimaryButton";
 import formatTime from "@/Helpers/formatTime";
 
 export default function SearchCard({ item }) {
-    console.log(item.type);
     const imageUrl = item?.images?.[0]?.url || '';  // Default to an empty string if undefined
     const title = item?.name || 'Unknown';          // Default to 'Unknown' if name is undefined
     const [openingModal, setOpeningModal] = useState(false);
     const [openingArtistModal, setOpeningArtistModal] = useState(false);
-
+    const [theItem, setTheItem] = useState(item);
     const [tracks, setTracks] = useState([]);
     const [albums, setAlbums] = useState([]);
     const [albumTracks, setAlbumTracks] = useState([]);
-
+    
+    
     const accessToken = localStorage.getItem('spotify_access_token');
 
     const fetchTracks = async () => {
@@ -48,6 +48,7 @@ export default function SearchCard({ item }) {
         });
         const data = await response.json();
         setAlbums(data.items);
+        console.log(albums);
     }
 
 
@@ -71,8 +72,13 @@ export default function SearchCard({ item }) {
 
     const handleAlbumClick = async (album) => {
         closeArtistModal();
-        console.log(album.id);
+        console.log(album);
+        item.artist = album.artists[0].name;
         await fetchAlbumTracks(album.id);
+        item.album_cover = album.images[0].url;
+        console.log(item.artist);
+        console.log(item.album_cover);
+
         setOpeningModal(true);
     }
     
@@ -90,7 +96,7 @@ export default function SearchCard({ item }) {
                 length: track.duration_ms,
                 album_track_number: track.track_number,
                 album: item.name,
-                album_cover: item.images[0].url,
+                album_cover: item.album_cover || item.images[0].url,
                 artist: item.artist,
             });
         } else {
