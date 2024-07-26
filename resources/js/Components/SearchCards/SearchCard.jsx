@@ -6,22 +6,31 @@ import PrimaryButton from "../PrimaryButton";
 import formatTime from "@/Helpers/formatTime";
 
 export default function SearchCard({ item }) {
-    console.log(item);
+    console.log(item.type);
     const imageUrl = item?.images?.[0]?.url || '';  // Default to an empty string if undefined
     const title = item?.name || 'Unknown';          // Default to 'Unknown' if name is undefined
     const [openingModal, setOpeningModal] = useState(false);
+    const [openingArtistModal, setOpeningArtistModal] = useState(false);
 
     const [tracks, setTracks] = useState([]);
     const [albums, setAlbums] = useState([]);
-
-
-
-
+    const [albumTracks, setAlbumTracks] = useState([]);
 
     const accessToken = localStorage.getItem('spotify_access_token');
 
     const fetchTracks = async () => {
         const response = await fetch(`https://api.spotify.com/v1/albums/${item.id}/tracks`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        const data = await response.json();
+        setTracks(data.items);
+        console.log(tracks);
+    };
+
+    const fetchAlbumTracks = async (albumId) => {
+        const response = await fetch(`https://api.spotify.com/v1/albums/${albumId}/tracks`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -42,13 +51,13 @@ export default function SearchCard({ item }) {
     }
 
 
-
     const openModal = () => {
-        setOpeningModal(true);
         if (item.type === 'album') {
+            setOpeningModal(true);
             fetchTracks();
         }
         else if (item.type === "artist") {
+            setOpeningArtistModal(true);
             fetchAlbums();
         }
     }
@@ -56,7 +65,17 @@ export default function SearchCard({ item }) {
     const closeModal = () => {
         setOpeningModal(false);
     };
+    const closeArtistModal = () => {
+        setOpeningArtistModal(false);
+    }
 
+    const handleAlbumClick = async (album) => {
+        closeArtistModal();
+        console.log(album.id);
+        await fetchAlbumTracks(album.id);
+        setOpeningModal(true);
+    }
+    
     const { data, setData, post, errors, reset } = useForm({
         songs: []
     });
@@ -90,10 +109,6 @@ export default function SearchCard({ item }) {
         post(route('songs.store'));
     };
 
-    const isTrackSelected = (track) => {
-        return data.songs.some(song => song.album_track_number === track.track_number);
-    };
-
     return (
         <>
             {/* <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button"> */}
@@ -120,6 +135,7 @@ export default function SearchCard({ item }) {
                 <form className="p-6" onSubmit={onSubmit}>
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">{title}</h1>
                     <p className="text-md mb-8 text-dark-black text-center">Select tracks to add</p>
+                    {/* TRACKS MODAL IS HERE DIPSHIT  */}
                     {tracks.map((track, index) => (
                         <div className="grid grid-cols-12 my-2" key={track.id}>
                             <Checkbox
@@ -138,11 +154,20 @@ export default function SearchCard({ item }) {
                             </div>
                         </div>
                     ))}
-                    <PrimaryButton className="mt-4">Add to Playlist</PrimaryButton>
+                    <PrimaryButton className="mt-4">Add to Library</PrimaryButton>
+                </form>
+            </Modal>
+
+            <Modal show={openingArtistModal} onClose={closeArtistModal}>
+            <form className="p-6" onSubmit={onSubmit}>
+                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">{title}</h1>
+                    <p className="text-md mb-8 text-dark-black text-center">Select Album</p>
                     {albums.map((album, index) => (
                         <>
+                            <div key={album.id}  onClick={() => handleAlbumClick(album)} className="cursor-pointer">
                             <p className="flex justify-between mt-2 mb-2"key={index}>{album.name} <span>{album.release_date}</span></p>
                             <hr />
+                            </div>
                         </>
                     ))}
                 </form>
