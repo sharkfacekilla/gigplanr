@@ -91,7 +91,7 @@ export default function SearchCard({ item }) {
     };
 
     const isTrackSelected = (track) => {
-        return data.songs.some(song => song.id === track.track_number);
+        return data.songs.some(song => song.album_track_number === track.track_number);
     };
 
     return (
@@ -125,7 +125,6 @@ export default function SearchCard({ item }) {
                             <Checkbox
                                 className="mx-auto my-auto"
                                 onChange={(e) => changeForm(e, track)}
-                                checked={isTrackSelected(track)}
                                 value={track.name}
                             />
                             <div className="col-span-1 my-auto">
