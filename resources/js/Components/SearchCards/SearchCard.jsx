@@ -5,6 +5,15 @@ import { useForm } from "@inertiajs/react";
 import PrimaryButton from "../PrimaryButton";
 import formatTime from "@/Helpers/formatTime";
 
+
+/**
+ * Renders a search card component
+ * TODO: Separate the modal into a separate component?
+ * 
+ * @component
+ * @param {Object} item - The item object containing information about the card.
+ * @returns {JSX.Element} The rendered search card component.
+ */
 export default function SearchCard({ item }) {
     const imageUrl = item?.images?.[0]?.url || '';  // Default to an empty string if undefined
     const title = item?.name || 'Unknown';          // Default to 'Unknown' if name is undefined
@@ -18,6 +27,7 @@ export default function SearchCard({ item }) {
     
     const accessToken = localStorage.getItem('spotify_access_token');
 
+    // Fetches the tracks of the album
     const fetchTracks = async () => {
         const response = await fetch(`https://api.spotify.com/v1/albums/${item.id}/tracks`, {
             headers: {
@@ -26,9 +36,10 @@ export default function SearchCard({ item }) {
         });
         const data = await response.json();
         setTracks(data.items);
-        console.log(tracks);
+        
     };
 
+    // Fetches the tracks of the album
     const fetchAlbumTracks = async (albumId) => {
         const response = await fetch(`https://api.spotify.com/v1/albums/${albumId}/tracks`, {
             headers: {
@@ -37,9 +48,9 @@ export default function SearchCard({ item }) {
         });
         const data = await response.json();
         setTracks(data.items);
-        console.log(tracks);
     };
 
+    // Fetches the albums of the artist
     const fetchAlbums = async () => {
         const response = await fetch(`https://api.spotify.com/v1/artists/${item.id}/albums`, {
             headers: {
@@ -48,10 +59,10 @@ export default function SearchCard({ item }) {
         });
         const data = await response.json();
         setAlbums(data.items);
-        console.log(albums);
     }
 
 
+    // Opens the modal
     const openModal = () => {
         if (item.type === 'album') {
             setOpeningModal(true);
@@ -63,6 +74,7 @@ export default function SearchCard({ item }) {
         }
     }
 
+    // Closes the modal
     const closeModal = () => {
         setOpeningModal(false);
     };
@@ -70,26 +82,28 @@ export default function SearchCard({ item }) {
         setOpeningArtistModal(false);
     }
 
+
+    // Handles the click of an album
     const handleAlbumClick = async (album) => {
         closeArtistModal();
-        console.log(album);
         item.artist = album.artists[0].name;
         await fetchAlbumTracks(album.id);
         item.album_cover = album.images[0].url;
-        console.log(item.artist);
-        console.log(item.album_cover);
-
+        
         setOpeningModal(true);
     }
     
+    // Handles the form submission
     const { data, setData, post, errors, reset } = useForm({
         songs: []
     });
 
+    // Changes the form
     const changeForm = (e, track) => {
         const { checked } = e.target;
         const updatedSongs = [...data.songs];
 
+        // If the checkbox is checked, add the song to the list
         if (checked) {
             updatedSongs.push({
                 title: track.name,
@@ -108,6 +122,7 @@ export default function SearchCard({ item }) {
         setData('songs', updatedSongs);
     };
     
+    // Submits the form
     const onSubmit = (e) => {
         e.preventDefault();
         console.log('Songs', data.songs);
@@ -115,33 +130,33 @@ export default function SearchCard({ item }) {
         post(route('songs.store'));
     };
 
+    // Renders the search card component
     return (
         <>
-            {/* <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button"> */}
-                <button onClick={openModal}>
-                    <div className="w-full mx-auto max-w-xs sm:max-w-sm rounded-3xl overflow-hidden flex flex-col shadow-lg shadow-white/10">
-                        {/* Render image */}
-                        {imageUrl ? (
-                            <img src={imageUrl} alt={title} className="w-full object-cover h-40 sm:h-48 md:h-64 lg:h-72" />
+            <button onClick={openModal}>
+                <div className="w-full mx-auto max-w-xs sm:max-w-sm rounded-3xl overflow-hidden flex flex-col shadow-lg shadow-white/10">
+                {/* Render image */}
+                    {imageUrl ? (
+                        <img src={imageUrl} alt={title} className="w-full object-cover h-40 sm:h-48 md:h-64 lg:h-72" />
                         ) : (
-                            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-600">
-                                <img src={"https://fakeimg.pl/1920x1920?text=+No+Image&font=bebas"} alt="No Image Found." className="w-full object-cover h-40 sm:h-48 md:h-64 lg:h-72"/>
-                            </div>
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-600">
+                            <img src={"https://fakeimg.pl/1920x1920?text=+No+Image&font=bebas"} alt="No Image Found." className="w-full object-cover h-40 sm:h-48 md:h-64 lg:h-72"/>
+                        </div>
                         )}
-                        {/* Render title */}
+                    {/* Render title */}
                         <div className="p-4 flex bg-dark-black flex-col flex-1">
                             <h3 className="text-lg text-center text-white font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap">
                                 {title}
                             </h3>
                         </div>
                     </div>
-                </button>
+            </button>
 
+            {/* Modal for the tracks */}
             <Modal show={openingModal} onClose={closeModal}>
                 <form className="p-6" onSubmit={onSubmit}>
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">{title}</h1>
                     <p className="text-md mb-8 text-dark-black text-center">Select tracks to add</p>
-                    {/* TRACKS MODAL IS HERE DIPSHIT  */}
                     {tracks.map((track, index) => (
                         <div className="grid grid-cols-12 my-2" key={track.id}>
                             <Checkbox
@@ -164,6 +179,7 @@ export default function SearchCard({ item }) {
                 </form>
             </Modal>
 
+            {/* Modal for the albums */}
             <Modal show={openingArtistModal} onClose={closeArtistModal}>
             <form className="p-6" onSubmit={onSubmit}>
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">{title}</h1>
@@ -180,4 +196,4 @@ export default function SearchCard({ item }) {
             </Modal>
         </>
     );
-}
+};
