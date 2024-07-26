@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('artist')->nullable();
             $table->string('album')->nullable();
             $table->string('album_cover')->nullable();
+            $table->string('album_track_number')->nullable();
             $table->integer('bpm')->nullable();
             $table->string('key')->nullable();
             $table->string('tuning')->nullable();

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreSongRequest;
 use Inertia\Inertia;
 use App\Models\Songs;
 use Illuminate\Http\Request;
@@ -31,9 +32,15 @@ class SongController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreSongRequest $request)
     {
-        //
+        $data = $request->validated();
+        $songs = $data['songs'];
+        
+        foreach ($songs as $song) {
+            Songs::create($song);
+        }
+        return redirect()->route('library.index');
     }
 
     /**

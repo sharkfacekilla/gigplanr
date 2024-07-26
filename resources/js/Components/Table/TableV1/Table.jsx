@@ -2,18 +2,13 @@ import DangerButton from "@/Components/DangerButton";
 import Pagination from "@/Components/Pagination";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TableHeading from "@/Components/TableHeading";
+import formatTime from "@/Helpers/formatTime";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import { useEffect } from "react";
 
 export default function Table({ songs }) {
     console.log(songs);
-
-    const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = seconds % 60;
-        return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
-    };
 
     return (
         <>

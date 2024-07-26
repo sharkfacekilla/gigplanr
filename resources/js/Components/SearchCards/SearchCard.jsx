@@ -1,24 +1,153 @@
+import { useState } from "react";
+import Modal from "../Modal";
+import Checkbox from "../Checkbox";
+import { useForm } from "@inertiajs/react";
+import PrimaryButton from "../PrimaryButton";
+import formatTime from "@/Helpers/formatTime";
+
 export default function SearchCard({ item }) {
+    console.log(item);
     const imageUrl = item?.images?.[0]?.url || '';  // Default to an empty string if undefined
     const title = item?.name || 'Unknown';          // Default to 'Unknown' if name is undefined
+    const [openingModal, setOpeningModal] = useState(false);
+
+    const [tracks, setTracks] = useState([]);
+    const [albums, setAlbums] = useState([]);
+
+
+
+
+
+    const accessToken = localStorage.getItem('spotify_access_token');
+
+    const fetchTracks = async () => {
+        const response = await fetch(`https://api.spotify.com/v1/albums/${item.id}/tracks`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        const data = await response.json();
+        setTracks(data.items);
+        console.log(tracks);
+    };
+
+    const fetchAlbums = async () => {
+        const response = await fetch(`https://api.spotify.com/v1/artists/${item.id}/albums`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        const data = await response.json();
+        setAlbums(data.items);
+    }
+
+
+
+    const openModal = () => {
+        setOpeningModal(true);
+        if (item.type === 'album') {
+            fetchTracks();
+        }
+        else if (item.type === "artist") {
+            fetchAlbums();
+        }
+    }
+
+    const closeModal = () => {
+        setOpeningModal(false);
+    };
+
+    const { data, setData, post, errors, reset } = useForm({
+        songs: []
+    });
+
+    const changeForm = (e, track) => {
+        const { checked } = e.target;
+        const updatedSongs = [...data.songs];
+
+        if (checked) {
+            updatedSongs.push({
+                title: track.name,
+                length: track.duration_ms,
+                album_track_number: track.track_number,
+                album: item.name,
+                album_cover: item.images[0].url,
+                artist: item.artist,
+            });
+        } else {
+            const index = updatedSongs.findIndex(song => song.id === track.track_number);
+            if (index > -1) {
+                updatedSongs.splice(index, 1);
+            }
+        }
+        setData('songs', updatedSongs);
+    };
+    
+    const onSubmit = (e) => {
+        e.preventDefault();
+        console.log('Songs', data.songs);
+    
+        post(route('songs.store'));
+    };
+
+    const isTrackSelected = (track) => {
+        return data.songs.some(song => song.id === track.track_number);
+    };
 
     return (
-        <div className="w-full mx-auto max-w-xs sm:max-w-sm rounded-3xl overflow-hidden flex flex-col shadow-lg shadow-white/10">
-            {/* Render image */}
-            {imageUrl ? (
-                <img src={imageUrl} alt={title} className="w-full object-cover h-40 sm:h-48 md:h-64 lg:h-72" />
-            ) : (
-                <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-600">
-                <img src={"https://fakeimg.pl/1920x1920?text=+No+Image&font=bebas"} alt="No Image Found."/>
-            </div>
-                
-            )}
-            {/* Render title */}
-            <div className="p-4 flex bg-dark-black flex-col flex-1">
-                <h3 className="text-lg text-center text-white font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap">
-                    {title}
-                </h3>
-            </div>
-        </div>
+        <>
+            {/* <button data-modal-target="default-modal" data-modal-toggle="default-modal" type="button"> */}
+                <button onClick={openModal}>
+                    <div className="w-full mx-auto max-w-xs sm:max-w-sm rounded-3xl overflow-hidden flex flex-col shadow-lg shadow-white/10">
+                        {/* Render image */}
+                        {imageUrl ? (
+                            <img src={imageUrl} alt={title} className="w-full object-cover h-40 sm:h-48 md:h-64 lg:h-72" />
+                        ) : (
+                            <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-600">
+                                <img src={"https://fakeimg.pl/1920x1920?text=+No+Image&font=bebas"} alt="No Image Found." className="w-full object-cover h-40 sm:h-48 md:h-64 lg:h-72"/>
+                            </div>
+                        )}
+                        {/* Render title */}
+                        <div className="p-4 flex bg-dark-black flex-col flex-1">
+                            <h3 className="text-lg text-center text-white font-semibold overflow-hidden overflow-ellipsis whitespace-nowrap">
+                                {title}
+                            </h3>
+                        </div>
+                    </div>
+                </button>
+
+            <Modal show={openingModal} onClose={closeModal}>
+                <form className="p-6" onSubmit={onSubmit}>
+                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">{title}</h1>
+                    <p className="text-md mb-8 text-dark-black text-center">Select tracks to add</p>
+                    {tracks.map((track, index) => (
+                        <div className="grid grid-cols-12 my-2" key={track.id}>
+                            <Checkbox
+                                className="mx-auto my-auto"
+                                onChange={(e) => changeForm(e, track)}
+                                checked={isTrackSelected(track)}
+                                value={track.name}
+                            />
+                            <div className="col-span-1 my-auto">
+                                <p>{track.track_number}</p>
+                            </div>
+                            <div className="col-span-9 me-4">
+                                <span>{track.name}</span>
+                            </div>
+                            <div className="col-span-1 my-auto">
+                                <span>{formatTime(track.duration_ms)}</span>
+                            </div>
+                        </div>
+                    ))}
+                    <PrimaryButton className="mt-4">Add to Playlist</PrimaryButton>
+                    {albums.map((album, index) => (
+                        <>
+                            <p className="flex justify-between mt-2 mb-2"key={index}>{album.name} <span>{album.release_date}</span></p>
+                            <hr />
+                        </>
+                    ))}
+                </form>
+            </Modal>
+        </>
     );
 }

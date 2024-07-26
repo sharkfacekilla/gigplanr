@@ -47,7 +47,10 @@ export default function SpotifySearch({}) {
         } else if (token) {
             setAuthenticated(true);
         }
-
+        else {
+            setAuthenticated(false);
+        }
+        console.log(authenticated)
     }
 
     /**
@@ -79,7 +82,15 @@ export default function SpotifySearch({}) {
                 Authorization: `Bearer ${accessToken}`
             }
         });
+
+
         const artistsData = await artistsResponse.json();
+        console.log(artistsData);
+
+        if (artistsData.error?.status === 401) {
+            localStorage.removeItem('spotify_access_token');
+            setAuthenticated(false);
+        }
 
         const albumsResponse = await fetch(albums, {
             headers: {
@@ -95,7 +106,6 @@ export default function SpotifySearch({}) {
         });
 
         const tracksData = await tracksResponse.json();
-        console.log(tracksData);
 
         setResults({
             artists: artistsData.artists?.items || [],
@@ -153,7 +163,8 @@ export default function SpotifySearch({}) {
             id: item.id,
             name: item.name,
             images: item.images,
-            type: 'album'
+            type: 'album',
+            artist: item.artists[0].name
         })),
         ...results.tracks.map(item => ({
             id: item.id,
@@ -170,7 +181,7 @@ export default function SpotifySearch({}) {
 
     useEffect(() => {
         authUser();
-    }, []);
+    }, [authenticated]);
 
     // Function to load more items.
     const loadMoreItems = () => {
@@ -180,45 +191,45 @@ export default function SpotifySearch({}) {
     return (
         <>
             {authenticated ? (
-                    <form onSubmit={handleSearch}>
-                        <div className="relative mx-auto max-w-[600px]">
-                            <AppleLookinSearchBar
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                                onSubmit={handleSearch}
-                                placeholder="Search for an artist or album"
-                            />
-                        </div>
-                    </form>
-                ) : (
-                    <div className="text-center text-white">
-                        <p>You need to authenticate with Spotify to search.</p>
-                        <button
-                            onClick={() => {
-                                const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-                                const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
-                                const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user-library-read`;
-                                window.location.href = authUrl;
-                            }}
-                            className="px-4 py-2 text-white bg-dark-black rounded-md"
-                        >
-                            Authenticate with Spotify
-                        </button>
+                <form onSubmit={handleSearch}>
+                    <div className="relative mx-auto max-w-[600px]">
+                        <AppleLookinSearchBar
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                            onSubmit={handleSearch}
+                            placeholder="Search for an artist or album"
+                        />
                     </div>
-                )}
+                </form>
+            ) : (
+                <div className="text-center text-white">
+                    <p>You need to authenticate with Spotify to search.</p>
+                    <button
+                        onClick={() => {
+                            const clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+                            const redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
+                            const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user-library-read`;
+                            window.location.href = authUrl;
+                        }}
+                        className="px-4 py-2 text-white bg-dark-black rounded-md"
+                    >
+                        Authenticate with Spotify
+                    </button>
+                </div>
+            )}
                 <div className="flex items-center justify-center mt-12">
-                    {search && 
+                    {search && authenticated && (
                         <div>
                             <h2 className="text-3xl text-white">Search Results for <span className="text-teal">{searchText}</span></h2>
                             <p className="mt-12 text-sm text-center text-white">Don't see what you're looking for? <span className="text-teal">Add it here</span></p>
                         </div>
-                    }
+                    )}
                 </div>
                 <div className="mt-12 mb-24 flex items-center">
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl w-3/4 md:w-full mx-auto">
-                {prioritizedResults.slice(0, visibleItems).map((item) => (
-                            <SearchCard key={item.id} item={item} />
-                        ))}
+                    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl w-3/4 md:w-full mx-auto">
+                    {prioritizedResults.slice(0, visibleItems).map((item) => (
+                        <SearchCard key={item.id} item={item} />
+                    ))}
                     </div>
                 </div>
                 {visibleItems < prioritizedResults.length && (
@@ -232,7 +243,7 @@ export default function SpotifySearch({}) {
                         </button>
                     </div>
                 )}
-                {search && (
+                {search && authenticated && (
                     <p className="mt-12 mb-32 text-md text-center text-white">Don't see what you're looking for? <span className="text-dark-black border border-white rounded-lg ms-2 px-2.5 py-2.5 bg-white">Add it here</span></p>
                 )}
         </>

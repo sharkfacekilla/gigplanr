@@ -19,7 +19,7 @@ class SongsFactory extends Factory
         return [
             'title' => $this->faker->name(),
             'album_cover' => $this->faker->imageUrl(),
-            'length' => $this->faker->numberBetween(100, 400),
+            'length' => $this->faker->numberBetween(100000, 400000),
             'artist' => $this->faker->name(),
             'album' => $this->faker->name(),
             'bpm' => $this->faker->numberBetween(60, 200),
