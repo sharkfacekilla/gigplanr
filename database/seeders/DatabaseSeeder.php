@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
         ]);
 
-        Songs::factory(10)->create();
+        // Songs::factory(10)->create();
     }
 }
