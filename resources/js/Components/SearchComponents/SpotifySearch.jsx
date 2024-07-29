@@ -55,8 +55,7 @@ export default function SpotifySearch({auth}) {
 
     /**
      * Handle's the search form submission. Connects to the Spotify API and fetches artists and albums based on the query.
-     * TODO: Implement tracks for this maybe?
-     * TODO: Make a way to search either Spotify or Apple Music (?) or both
+     * TODO: Optimize Search
      * @param {event} e the event object
      */
     const handleSearch = async (e) => {
@@ -74,9 +73,9 @@ export default function SpotifySearch({auth}) {
 
         // const accessToken = import.meta.env.VITE_ACCESS_TOKEN;
         const accessToken = localStorage.getItem('spotify_access_token');
-        const artists = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=5`;
-        const albums = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=album&limit=15`;
-        const tracks = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`;
+        const artists = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist&limit=2`;
+        const albums = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=album&limit=5`;
+        const tracks = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=20`;
         const artistsResponse = await fetch(artists, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -123,32 +122,26 @@ export default function SpotifySearch({auth}) {
     // Function to prioritize query items
     const prioritizeResults = (items, query) => {
         const lowercaseQuery = query.toLowerCase();
-        return items.sort((a, b) => {
+        console.log(lowercaseQuery);
+    return items.sort((a, b) => {
+        const aName = a.name.toLowerCase();
+        const bName = b.name.toLowerCase();
 
-            const aQuery = a.name.toLowerCase().includes(lowercaseQuery);
-            const bQuery = b.name.toLowerCase().includes(lowercaseQuery);
+        const aContainsQuery = aName.includes(lowercaseQuery);
+        const bContainsQuery = bName.includes(lowercaseQuery);
 
-            if (aQuery && a.type === 'artist' && !(bQuery && b.type === 'artist')) {
-                return -1;
-            }
-            if (!(aQuery && a.type === 'artist') && bQuery && b.type === 'artist') {
-                return 1;
-            }
-            if (aQuery && a.type === 'album' && !(bQuery && b.type === 'album')) {
-                return -1;
-            }
-            if (!(aQuery && a.type === 'album') && bQuery && b.type === 'album') {
-                return 1;
-            }
-            if (aQuery && a.type === 'track' && !(bQuery && b.type === 'track')) {
-                return -1;
-            }
-            if (!(aQuery && a.type === 'track') && bQuery && b.type === 'track') {
-                return 1;
-            }
-            return 0;
-        });
-    };
+        // Prioritize items that contain the query
+        if (aContainsQuery && !bContainsQuery) {
+            return -1;
+        }
+        if (!aContainsQuery && bContainsQuery) {
+            return 1;
+        }
+
+        // If both contain the query, maintain their original order
+        return 0;
+    });
+};
 
     // Combine and prioritize results
     const combineAndPrioritize = (results, query) => {
