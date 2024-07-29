@@ -6,6 +6,7 @@ import AlbumCard from "@/Components/AlbumCards/AlbumCard";
 import AppleLookinSearchBar from "@/Components/AppleLookinSearchBar";
 import SearchCard from "@/Components/SearchCards/SearchCard";
 import SpotifySearch from "@/Components/SearchComponents/SpotifySearch";
+import AppleMusicSearch from "@/Components/SearchComponents/AppleMusicSearch";
 
 export default function ApiTestPage({ auth }) {
     return (
@@ -14,6 +15,7 @@ export default function ApiTestPage({ auth }) {
                 <Head title="API Test Page" />
                 <div className="overflow-x-scroll md:overflow-hidden">
                     <SpotifySearch />
+                    <AppleMusicSearch />
                 </div>
             </AuthenticatedLayout>
         </>

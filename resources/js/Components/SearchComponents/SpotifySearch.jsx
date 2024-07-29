@@ -211,9 +211,12 @@ export default function SpotifySearch({}) {
                             const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user-library-read`;
                             window.location.href = authUrl;
                         }}
-                        className="px-4 py-2 text-white bg-dark-black rounded-md"
+                        className="px-5 py-3 text-white bg-spotify-green rounded-3xl mt-4"
                     >
-                        Authenticate with Spotify
+                        <div className="flex items-center justify-center">
+                            <img src="/img/spotify/logo.png" style={{height:25}} className="me-3"></img>
+                            <h1>Authenticate with Spotify</h1>
+                        </div>
                     </button>
                 </div>
             )}

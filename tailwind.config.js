@@ -26,7 +26,8 @@ export default {
                 'red': '#ee4266',
                 'yellow': '#ffff82',
                 'pink': '#d1b1c8',
-                'gray': '#FAFAFA'
+                'gray': '#FAFAFA',
+                'spotify-green': '#1DB954',
             }
         },
     },
