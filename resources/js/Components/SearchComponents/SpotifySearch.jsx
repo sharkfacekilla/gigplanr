@@ -153,7 +153,7 @@ export default function SpotifySearch({auth}) {
             id: item.id,
             name: item.name,
             images: item.images,
-            type: 'artist'
+            type: 'artist',
         })),
         ...results.albums.map(item => ({
             id: item.id,

@@ -98,6 +98,7 @@ export default function SearchCard({ item, auth }) {
         item.artist = album.artists[0].name;
         await fetchAlbumTracks(album.id);
         item.album_cover = album.images[0].url;
+        item.name = album.name;
         
         setOpeningModal(true);
     }
