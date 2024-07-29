@@ -15,22 +15,20 @@ import formatTime from "@/Helpers/formatTime";
  * @returns {JSX.Element} The rendered search card component.
  */
 export default function SearchCard({ item, auth }) {
-    console.log(item);
     const user_id = auth.id;
     const imageUrl = item?.images?.[0]?.url || '';  // Default to an empty string if undefined
     const title = item?.name || 'Unknown';          // Default to 'Unknown' if name is undefined
-
     const [openingModal, setOpeningModal] = useState(false);
     const [openingArtistModal, setOpeningArtistModal] = useState(false);
+    const [theItem, setTheItem] = useState(item);
+    const [tracks, setTracks] = useState([]);
+    const [albums, setAlbums] = useState([]);
     const [trackModal, setOpenTrackModal] = useState(false);
     const [selectedTrack, setSelectedTrack] = useState(null);
 
-
+    const [albumTracks, setAlbumTracks] = useState([]);
     
-    const [tracks, setTracks] = useState([]);
-    const [albums, setAlbums] = useState([]);
-    
-    
+    console.log(selectedTrack);
     
     const accessToken = localStorage.getItem('spotify_access_token');
 
@@ -75,11 +73,11 @@ export default function SearchCard({ item, auth }) {
             setOpeningModal(true);
             fetchTracks();
         }
-        if (item.type === "artist") {
+        else if (item.type === "artist") {
             setOpeningArtistModal(true);
             fetchAlbums();
         }
-        if (item.type=== 'track'){
+        else if (item.type=== 'track'){
             setSelectedTrack(item); // Set the selected track directly
             setOpenTrackModal(true);
         }
@@ -96,7 +94,6 @@ export default function SearchCard({ item, auth }) {
         setSelectedTrack(null);
         setOpenTrackModal(false);
     }
-
 
     // Handles the click of an album
     const handleAlbumClick = async (album) => {
@@ -122,12 +119,11 @@ export default function SearchCard({ item, auth }) {
         if (checked) {
             updatedSongs.push({
                 title: track.name,
-                length: track.length,
+                length: track.duration_ms || track.length,
                 album_track_number: track.track_number,
                 album: item.name,
                 album_cover: item.album_cover || item.images[0].url,
                 artist: item.artist,
-                length: item.length,
             });
         } else {
             const index = updatedSongs.findIndex(song => song.id === track.track_number);
