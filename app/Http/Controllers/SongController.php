@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSongRequest;
 use Inertia\Inertia;
 use App\Models\Songs;
 use Illuminate\Http\Request;
 use App\Http\Resources\SongResource;
+use App\Http\Requests\StoreSongRequest;
+use App\Http\Requests\UpdateSongRequest;
 
 class SongController extends Controller
 {
@@ -64,9 +65,12 @@ class SongController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSongRequest $request, Songs $song)
     {
-        //
+        // dd($request);
+        $data = $request->validated();
+        // dd($data);
+        $song->update($data);
     }
 
     /**

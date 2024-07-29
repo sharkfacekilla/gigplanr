@@ -12,6 +12,7 @@ import { Head, Link, router, useForm } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 export default function Table({ songs }) {
+
     const [editModal, setEditModal] = useState(false);
     const [song, setSong] = useState(null);
 
@@ -24,6 +25,10 @@ export default function Table({ songs }) {
       console.log(totalMilliseconds);
       setData("duration", totalMilliseconds);
     };
+
+    function stringToBool(str) {
+        return str === 'true';
+    }
 
     function convertMillisecondsToTime(ms) {
         const totalSeconds = Math.floor(ms / 1000);
@@ -38,9 +43,13 @@ export default function Table({ songs }) {
 
     const { data, setData, patch, errors } = useForm({
         title: songs?.data.title || '',
-        album_title: songs?.data.album_title || '',
-        duration: song?.length || 0,
+        album: songs?.data.album || '',
+        length: song?.length || 0,
         bpm: song?.bpm || 0,
+        key: song?.key || '',
+        tuning: song?.tuning || '', 
+        cover: song?.cover|| 0,
+        metronome: song?.metronome || 0,
         _method: "PATCH",
     });
     
@@ -50,11 +59,15 @@ export default function Table({ songs }) {
 
         setData({
             title: song.title,
-            album_title: song.album,
-            duration: song?.length,
+            album: song.album,
+            length: song?.length,
             song_minutes: minutes,
             song_seconds: seconds,
-            bpm: song.bpm
+            bpm: song.bpm,
+            key: song.key,
+            tuning: song.tuning,
+            cover: song.cover,
+            metronome: song.metronome,
         });
         setMinutes(minutes);
         setSeconds(seconds);
@@ -75,9 +88,10 @@ export default function Table({ songs }) {
         e.preventDefault();
         handleConvert();
 
+        console.log(data);
+        patch(route('songs.update', song.id), data);
     };
 
-    console.log(data);
     console.log(song);
     
     
@@ -151,8 +165,8 @@ export default function Table({ songs }) {
                                 <TextInput id="title" type="text" name="title" value={data.title} isFocused={true} onChange={(e) =>  setData("title", e.target.value)} className="text-black w-full" />
                             </div>
                             <div>
-                                <InputLabel htmlFor="album_title" className="text-nowrap mb-1 ms-1"  value="Album Title" />
-                                <TextInput id="album_title" type="text" name="album_title" value={data.album_title} onChange={(e) =>  setData("album_title", e.target.value)} className="text-black w-full" />
+                                <InputLabel htmlFor="album" className="text-nowrap mb-1 ms-1"  value="Album Title" />
+                                <TextInput id="album" type="text" name="album" value={data.album} onChange={(e) =>  setData("album", e.target.value)} className="text-black w-full" />
                             </div>
                             <div>
                                 <InputLabel value="Minutes" />
@@ -162,7 +176,31 @@ export default function Table({ songs }) {
                             </div>
                             <div>
                                 <InputLabel htmlFor="bpm" className="text-nowrap mb-1 ms-1"  value="BPM" />
-                                <TextInput id="bpm" type="text" name="bpm" value={data.bpm} onChange={(e) =>  setData("bpm", e.target.value)} className="text-black w-full" />
+                                <TextInput id="bpm" type="number" name="bpm" value={data.bpm} onChange={(e) =>  setData("bpm", e.target.value)} className="text-black w-full" />
+                            </div>
+                            <div>
+                                <InputLabel htmlFor="key" className="text-nowrap mb-1 ms-1"  value="Key" />
+                                <TextInput id="key" type="text" name="key" value={data.key} onChange={(e) =>  setData("key", e.target.value)} className="text-black w-full" />
+                            </div>
+                            <div>
+                                <InputLabel htmlFor="tuning" className="text-nowrap mb-1 ms-1"  value="Tuning" />
+                                <TextInput id="tuning" type="text" name="tuning" value={data.tuning} onChange={(e) =>  setData("tuning", e.target.value)} className="text-black w-full" />
+                            </div>
+                            <div>
+                                <InputLabel htmlFor="cover" className="text-nowrap mb-1 ms-1"  value="Cover" />
+                                <select id="cover" name="cover" defaultValue="" onChange={(e) => setData("cover", stringToBool(e.target.value))} className="text-black w-full rounded-lg">
+                                    <option value="" disabled>Select Option</option>
+                                    <option value='true'>Yes</option>
+                                    <option value='false'>No</option>
+                                </select>
+                            </div>
+                            <div>
+                                <InputLabel htmlFor="metronome" className="text-nowrap mb-1 ms-1"  value="Metronome" />
+                                <select id="metronome" name="metronome" defaultValue="" onChange={(e) => setData("metronome", stringToBool(e.target.value))} className="text-black w-full rounded-lg">
+                                    <option value="" disabled>Select Option</option>
+                                    <option value='true'>Yes</option>
+                                    <option value='false'>No</option>
+                                </select>
                             </div>
                         </div>
                     <PrimaryButton className="mt-4" onClick={handleConvert}>Save</PrimaryButton>
