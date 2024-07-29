@@ -15,15 +15,21 @@ import formatTime from "@/Helpers/formatTime";
  * @returns {JSX.Element} The rendered search card component.
  */
 export default function SearchCard({ item, auth }) {
+    console.log(item);
     const user_id = auth.id;
     const imageUrl = item?.images?.[0]?.url || '';  // Default to an empty string if undefined
     const title = item?.name || 'Unknown';          // Default to 'Unknown' if name is undefined
+
     const [openingModal, setOpeningModal] = useState(false);
     const [openingArtistModal, setOpeningArtistModal] = useState(false);
-    const [theItem, setTheItem] = useState(item);
+    const [trackModal, setOpenTrackModal] = useState(false);
+    const [selectedTrack, setSelectedTrack] = useState(null);
+
+
+    
     const [tracks, setTracks] = useState([]);
     const [albums, setAlbums] = useState([]);
-    const [albumTracks, setAlbumTracks] = useState([]);
+    
     
     
     const accessToken = localStorage.getItem('spotify_access_token');
@@ -69,9 +75,13 @@ export default function SearchCard({ item, auth }) {
             setOpeningModal(true);
             fetchTracks();
         }
-        else if (item.type === "artist") {
+        if (item.type === "artist") {
             setOpeningArtistModal(true);
             fetchAlbums();
+        }
+        if (item.type=== 'track'){
+            setSelectedTrack(item); // Set the selected track directly
+            setOpenTrackModal(true);
         }
     }
 
@@ -81,6 +91,10 @@ export default function SearchCard({ item, auth }) {
     };
     const closeArtistModal = () => {
         setOpeningArtistModal(false);
+    }
+    const closeTrackModal = () => {
+        setSelectedTrack(null);
+        setOpenTrackModal(false);
     }
 
 
@@ -113,6 +127,7 @@ export default function SearchCard({ item, auth }) {
                 album: item.name,
                 album_cover: item.album_cover || item.images[0].url,
                 artist: item.artist,
+                length: item.length,
             });
         } else {
             const index = updatedSongs.findIndex(song => song.id === track.track_number);
@@ -193,6 +208,30 @@ export default function SearchCard({ item, auth }) {
                             </div>
                         </>
                     ))}
+                </form>
+            </Modal>
+
+            <Modal show={trackModal} onClose={closeTrackModal}>
+                <form className="p-6" onSubmit={onSubmit}>
+                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">{title}</h1>
+                    <p className="text-md mb-8 text-dark-black text-center">Select tracks to add</p>
+                        <div className="grid grid-cols-12 my-2" key={item.id}>
+                            <Checkbox
+                                className="mx-auto my-auto"
+                                onChange={(e) => changeForm(e, item)}
+                                value={item.name}
+                            />
+                            <div className="col-span-1 my-auto">
+                                <p>{item.track_number}</p>
+                            </div>
+                            <div className="col-span-9 me-4">
+                                <span>{item.name}</span>
+                            </div>
+                            <div className="col-span-1 my-auto">
+                                <span>{formatTime(item.length)}</span>
+                            </div>
+                        </div>
+                    <PrimaryButton className="mt-4">Add to Library</PrimaryButton>
                 </form>
             </Modal>
         </>

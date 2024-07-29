@@ -103,8 +103,11 @@ export default function SpotifySearch({auth}) {
                 Authorization: `Bearer ${accessToken}`
             }
         });
+        
 
         const tracksData = await tracksResponse.json();
+
+        console.log("DATA:::" ,tracksData);
 
         setResults({
             artists: artistsData.artists?.items || [],
@@ -163,7 +166,11 @@ export default function SpotifySearch({auth}) {
             id: item.id,
             name: item.name,
             images: item.album.images,
-            type: 'track'
+            type: 'track',
+            length: item.duration_ms,
+            track_number: item.track_number,
+            artist: item.artists[0].name,
+
         }))
     ];
     return prioritizeResults(combinedResults, query);
