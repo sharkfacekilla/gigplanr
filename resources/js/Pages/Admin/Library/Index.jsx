@@ -13,6 +13,8 @@ export default function Index({ auth, songs }) {
                     <div className="overflow-hidden">
                         <div className="p-6">
                             <h1 className="text-2xl text-white">Library</h1>
+                            <p>Create your own</p>
+                            <p>Search Spotify</p>
                             <Table songs={songs} />
                         </div>
                     </div>

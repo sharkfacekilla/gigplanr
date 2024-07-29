@@ -122,7 +122,7 @@ export default function SearchCard({ item, auth }) {
         if (checked) {
             updatedSongs.push({
                 title: track.name,
-                length: track.duration_ms,
+                length: track.length,
                 album_track_number: track.track_number,
                 album: item.name,
                 album_cover: item.album_cover || item.images[0].url,
