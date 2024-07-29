@@ -15,7 +15,8 @@ class SongController extends Controller
      */
     public function index()
     {
-        $songs = Songs::orderBy('id', 'desc')->paginate(10)->onEachSide(1);
+        $user_id = auth()->user()->id;
+        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->paginate(10)->onEachSide(1);
         return Inertia::render('Admin/Library/Index', [
             'songs' => SongResource::collection($songs)
         ]);
@@ -36,8 +37,9 @@ class SongController extends Controller
     {
         $data = $request->validated();
         $songs = $data['songs'];
-        
+        $user_id = auth()->user()->id;
         foreach ($songs as $song) {
+            $song['user_id'] = $user_id;
             Songs::create($song);
         }
         return redirect()->route('library.index');

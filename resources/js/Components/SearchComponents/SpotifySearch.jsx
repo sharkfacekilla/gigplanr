@@ -6,7 +6,7 @@ import AlbumCard from "@/Components/AlbumCards/AlbumCard";
 import AppleLookinSearchBar from "@/Components/AppleLookinSearchBar";
 import SearchCard from "@/Components/SearchCards/SearchCard";
 
-export default function SpotifySearch({}) {
+export default function SpotifySearch({auth}) {
     const [results, setResults] = useState({
         artists: [],
         albums: [],
@@ -231,7 +231,7 @@ export default function SpotifySearch({}) {
                 <div className="mt-12 mb-24 flex items-center">
                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl w-3/4 md:w-full mx-auto">
                     {prioritizedResults.slice(0, visibleItems).map((item) => (
-                        <SearchCard key={item.id} item={item} />
+                        <SearchCard key={item.id} item={item} auth={auth} />
                     ))}
                     </div>
                 </div>

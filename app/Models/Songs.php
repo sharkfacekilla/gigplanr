@@ -11,6 +11,7 @@ class Songs extends Model
 
     protected $fillable = [
         'title',
+        'user_id',
         'length',
         'artist',
         'album',

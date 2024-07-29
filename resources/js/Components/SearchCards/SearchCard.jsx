@@ -14,7 +14,8 @@ import formatTime from "@/Helpers/formatTime";
  * @param {Object} item - The item object containing information about the card.
  * @returns {JSX.Element} The rendered search card component.
  */
-export default function SearchCard({ item }) {
+export default function SearchCard({ item, auth }) {
+    const user_id = auth.id;
     const imageUrl = item?.images?.[0]?.url || '';  // Default to an empty string if undefined
     const title = item?.name || 'Unknown';          // Default to 'Unknown' if name is undefined
     const [openingModal, setOpeningModal] = useState(false);

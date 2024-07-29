@@ -9,13 +9,13 @@ import SpotifySearch from "@/Components/SearchComponents/SpotifySearch";
 import AppleMusicSearch from "@/Components/SearchComponents/AppleMusicSearch";
 
 export default function ApiTestPage({ auth }) {
+    console.log(auth);
     return (
         <>
             <AuthenticatedLayout user={auth.user}>
                 <Head title="API Test Page" />
                 <div className="overflow-x-scroll md:overflow-hidden">
-                    <SpotifySearch />
-                    <AppleMusicSearch />
+                    <SpotifySearch auth={auth}/>
                 </div>
             </AuthenticatedLayout>
         </>
