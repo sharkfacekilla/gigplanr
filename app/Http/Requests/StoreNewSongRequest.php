@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateSongRequest extends FormRequest
+class StoreNewSongRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,18 @@ class UpdateSongRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['sometimes', 'required_if:title,present', 'string'],
-            'length' => ['sometimes', 'required_if:length,present', 'integer'],
-            'album' => ['nullable', 'string'],
-            // 'album_cover' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],            
-            'album_track_number' => ['nullable', 'integer'],
-            'artist' => ['nullable', 'string'], 
+            'title' => ['required', 'string', 'max:255', 'min:1'],
+            'length' => ['required', 'integer'],
+            'artist' => ['nullable', 'string', 'max:255', 'min:1'],
+            'album' => ['nullable', 'string', 'max:255', 'min:1'],
+            'album_cover' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],
+            'album_track_number' => ['nullable', 'integer', 'max:255'],
             'bpm' => ['nullable', 'integer'],
-            'key' => ['nullable', 'string'],
-            'tuning' => ['nullable', 'string'],
+            'key' => ['nullable', 'string', 'max:255'],
+            'tuning' => ['nullable', 'string', 'max:255'],
             'cover' => ['nullable', 'boolean'],
             'metronome' => ['nullable', 'boolean'],
+
         ];
     }
 }

@@ -1,26 +1,25 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Modal from "../Modal";
 import PrimaryButton from "../PrimaryButton";
 import InputLabel from "../InputLabel";
 import { useForm } from "@inertiajs/react";
 import TextInput from "../TextInput";
 
-export default function NewSongModal({ show, onClose, song }) {
+export default function NewSongModal({ show, onClose }) {
     const filenameLabelRef = useRef(null);
     const uploadInputRef = useRef(null);
     const [minutes, setMinutes] = useState('');
     const [seconds, setSeconds] = useState('');
 
-    const { data, setData, put, reset } = useForm({
-        title: song?.title || '',
-        length: song?.length || 0,
-        _method: 'PUT',
+    const { data, setData, post, reset } = useForm({
+        album_cover: null,
     });
 
-    const setCover = (file) => {
-        console.log(file.name);
-        setData("album_cover", file); 
-        console.log(data.album_cover);
+    const handleConvert = () => {
+        const totalMilliseconds = (parseInt(minutes) || 0) * 60 * 1000 +
+                                  (parseInt(seconds) || 0) * 1000;
+        console.log(totalMilliseconds);
+        setData("length", totalMilliseconds);
     };
 
     const handleFileChange = (e) => {
@@ -34,25 +33,30 @@ export default function NewSongModal({ show, onClose, song }) {
                 setCover(file);
             }
         }
-        setCover(file);
     };
 
-    useEffect(() => {
-        if (song) {
-            const { minutes, seconds } = convertMillisecondsToTime(song.length);
-            setData({
-                title: song.title,
-                length: song?.length,
-                song_minutes: minutes,
-                song_seconds: seconds,
-                album: song.album,
-                album_cover: song.album_cover,
-                artist: song.artist,
-            });
-            setMinutes(minutes);
-            setSeconds(seconds);
-        }
-    }, [song]);
+    const setCover = (file) => {
+        setData("album_cover", file);
+        console.log("set cover called");
+    };
+
+    console.log(show);
+
+    function stringToBool(str) {
+        return str === 'true';
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('album_cover', data.album_cover);
+        handleConvert();
+
+        console.log(data);
+        post(route('songs.store.new'), data);
+        onClose();
+        reset();
+    };
 
     const handleClick = (e) => {
         e.preventDefault();
@@ -62,61 +66,15 @@ export default function NewSongModal({ show, onClose, song }) {
         }
     };
 
-    const handleConvert = () => {
-        const totalMilliseconds = (parseInt(minutes) || 0) * 60 * 1000 +
-                                  (parseInt(seconds) || 0) * 1000;
-        setData("length", totalMilliseconds);
-    };
-
-    function convertMillisecondsToTime(ms) {
-        const totalSeconds = Math.floor(ms / 1000);
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
-      
-        return {
-          minutes,
-          seconds
-        };
-      }
-
-
-
-    function stringToBool(str) {
-        return str === 'true';
-    }
-
-    
-    const onSubmit = (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-
-    
-        // Append all fields to FormData
-        formData.append('title', data.title);
-        formData.append('length', data.length);
-        formData.append('album', data.album);
-        formData.append('bpm', data.bpm);
-        formData.append('key', data.key);
-        formData.append('tuning', data.tuning);
-        formData.append('cover', data.cover);
-        formData.append('metronome', data.metronome);
-        handleConvert();
-        put(route('songs.update', song), data);
-        console.log(data);
-        onClose();
-        reset();
-    };
-
     return (
-        <>
         <Modal show={show} onClose={onClose}>
             <form className="p-6 max-h-screen overflow-y-auto" onSubmit={onSubmit} encType="multipart/form-data">
-                <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">Edit "{song?.title}"</h1>
+                <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">Add New Song</h1>
                 <div className="grid grid-cols-2 gap-4 my-2">
                     <div className="flex flex-wrap items-center my-auto">
                         <div className="w-full">
                             <InputLabel htmlFor="title" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Song Name" />
-                            <input id="title" type="text" value={data.title} name="title" isFocused={true} onChange={(e) => setData("title", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
+                            <input id="title" type="text" name="title" isFocused={true} onChange={(e) => setData("title", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
                         </div>
                         <div className="w-full">
                             <InputLabel htmlFor="album" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Album Title" />
@@ -128,7 +86,7 @@ export default function NewSongModal({ show, onClose, song }) {
                         </div>
                         <div className="w-full">
                             <InputLabel htmlFor="artist" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Artist" />
-                            <input id="artist" value={data.artist} type="text" name="artist" onChange={(e) => setData("artist", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
+                            <input id="artist" type="text" name="artist" onChange={(e) => setData("artist", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
                         </div>
                         <div className="w-full">
                             <InputLabel htmlFor="album_track_number" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Track Number" />
@@ -175,7 +133,7 @@ export default function NewSongModal({ show, onClose, song }) {
                 </div>
                 <div className="flex flex-col mt-8 w-full">
                     <button className="block py-2.5 px-4 w-full text-sm text-dark-black bg-gray-200 rounded-lg border border-dark-black/20 focus:outline-none focus:ring-0 focus:border-teal hover:bg-gray-300" onClick={handleClick}>Album Cover</button>
-                    <input type="file" ref={uploadInputRef} onChange={(e) => handleFileChange(e)} style={{ display: "none" }} />
+                    <input type="file" ref={uploadInputRef} onChange={handleFileChange} style={{ display: "none" }} />
                     <label ref={filenameLabelRef} className="block py-2.5 px-4 w-full text-sm text-dark-black mt-2"></label>
                 </div>
                 <div className="mt-4">
@@ -183,6 +141,5 @@ export default function NewSongModal({ show, onClose, song }) {
                 </div>
             </form>
         </Modal>
-        </>
-    )
-};
+    );
+}

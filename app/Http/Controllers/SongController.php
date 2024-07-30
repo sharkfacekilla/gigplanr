@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\SongResource;
 use App\Http\Requests\StoreSongRequest;
 use App\Http\Requests\UpdateSongRequest;
+use App\Http\Requests\StoreNewSongRequest;
 
 class SongController extends Controller
 {
@@ -46,6 +47,20 @@ class SongController extends Controller
         return redirect()->route('library.index');
     }
 
+    public function storeNew(StoreNewSongRequest $request) 
+    {
+        $data = $request->validated();
+        $data['user_id'] = auth()->user()->id;
+        if ($request->hasFile('album_cover')) {
+            $file = $request->file('album_cover');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path(), $filename);
+            $data['album_cover'] = $filename;    
+        }
+        Songs::create($data);
+        return redirect()->route('library.index');
+    }
+
     /**
      * Display the specified resource.
      */
@@ -66,9 +81,15 @@ class SongController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateSongRequest $request, Songs $song)
-    {
-        // dd($request);
+    {        
         $data = $request->validated();
+        // dd($request->hasFile('album_cover'));
+        // if ($request->hasFile('album_cover')) {
+        //     $file = $request->file('album_cover');
+        //     $filename = time() . '_' . $file->getClientOriginalName();
+        //     $file->move(public_path(), $filename);
+        //     $data['album_cover'] = $filename;    
+        // }
         // dd($data);
         $song->update($data);
     }

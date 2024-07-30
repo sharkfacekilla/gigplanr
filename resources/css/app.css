@@ -34,3 +34,7 @@
   ::-webkit-scrollbar {
     display: none;
   }
+
+  .file-input {
+    display: none;
+}

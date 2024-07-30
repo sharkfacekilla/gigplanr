@@ -44,6 +44,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/songs', SongController::class);
     Route::post('/songs/store', [SongController::class, 'store'])->name('songs.store');
+    Route::post('/songs/storeNew', [SongController::class, 'storeNew'])->name('songs.store.new');
     Route::get('/library', [SongController::class, 'index'])->name('library.index');
 });
 
