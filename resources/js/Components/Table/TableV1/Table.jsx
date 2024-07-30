@@ -7,9 +7,8 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TableHeading from "@/Components/TableHeading";
 import TextInput from "@/Components/TextInput";
 import formatTime from "@/Helpers/formatTime";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link, router, useForm } from "@inertiajs/react";
-import { useEffect, useState } from "react";
+import { useForm } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function Table({ songs }) {
 
@@ -90,6 +89,7 @@ export default function Table({ songs }) {
 
         console.log(data);
         patch(route('songs.update', song.id), data);
+        closeModal();
     };
 
     console.log(song);
@@ -143,8 +143,6 @@ export default function Table({ songs }) {
                                 <td className="px-3 py-2">{song.cover ? "Yes" : "No"}</td>
                                 <td className="px-3 py-2">{song.metronome ? "Yes" : "No"}</td>
                                 <td className="text-nowrap">
-
-                                    {/* <button className="bg-blue text-white p-1 mr-2 rounded-md ">Manage</button> */}
                                     <button className="text-blue me-4" onClick={() => handleClick(song)} >Edit </button>
                                     <button className="text-white bg-red rounded-md py-2 px-2">Delete</button>
                                 </td>
