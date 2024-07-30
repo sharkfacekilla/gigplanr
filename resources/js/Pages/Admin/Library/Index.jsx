@@ -4,7 +4,6 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 
-
 export default function Index({ auth, songs }) {
     const [newSongModal, setNewSongModal] = useState(false);
 
@@ -16,8 +15,6 @@ export default function Index({ auth, songs }) {
         setNewSongModal(false);
     }
 
-
-
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Library" />
@@ -27,14 +24,19 @@ export default function Index({ auth, songs }) {
                     <div className="overflow-hidden">
                         <div className="p-6">
                             <h1 className="text-2xl text-white">Library</h1>
-                            <button className="text-white bg-teal py-2 px-4 rounded-3xl hover:bg-light-blue" onClick={(e) => openModal()}>Add Song</button>
+                            <button className="text-white bg-teal py-2 px-4 rounded-3xl hover:bg-light-blue" onClick={openModal}>Add Song</button>
                             <p>Search Spotify</p>
                             <Table songs={songs} />
                         </div>
                     </div>
                 </div>
             </div>
-            <NewSongModal show={newSongModal} onClose={closeModal}/>
+            {newSongModal && 
+            <>
+                <div className="backdrop" onClick={closeModal}></div>
+                    <NewSongModal show={newSongModal} onClose={closeModal} />
+            </>
+            }
         </AuthenticatedLayout>
     );
-};
+}

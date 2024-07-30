@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Modal from "../Modal";
 import PrimaryButton from "../PrimaryButton";
 import InputLabel from "../InputLabel";
@@ -10,6 +10,17 @@ export default function NewSongModal({ show, onClose }) {
     const uploadInputRef = useRef(null);
     const [minutes, setMinutes] = useState('');
     const [seconds, setSeconds] = useState('');
+
+    useEffect(() => {
+        if (show) {
+            document.body.classList.add('modal-blur');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
+        return () => {
+            document.body.classList.remove('modal-open');
+        };
+    }, [show])
 
     const { data, setData, post, reset } = useForm({
         album_cover: null,
@@ -68,7 +79,7 @@ export default function NewSongModal({ show, onClose }) {
 
     return (
         <Modal show={show} onClose={onClose}>
-            <form className="p-6 max-h-screen overflow-y-auto" onSubmit={onSubmit} encType="multipart/form-data">
+            <form className="p-6 max-h-screen overflow-y-auto bg-gradient-to-b from-teal/70 to-light-blue/90" onSubmit={onSubmit} encType="multipart/form-data">
                 <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">Add New Song</h1>
                 <div className="grid grid-cols-2 gap-4 my-2">
                     <div className="flex flex-wrap items-center my-auto">
@@ -132,7 +143,7 @@ export default function NewSongModal({ show, onClose }) {
                     </div>
                 </div>
                 <div className="flex flex-col mt-8 w-full">
-                    <button className="block py-2.5 px-4 w-full text-sm text-dark-black bg-gray-200 rounded-lg border border-dark-black/20 focus:outline-none focus:ring-0 focus:border-teal hover:bg-gray-300" onClick={handleClick}>Album Cover</button>
+                    <button className="block py-2.5 px-4 w-full text-sm bg-dark-blue text-white rounded-lg border border-dark-black/20 focus:outline-none focus:ring-0 focus:border-teal hover:bg-gray-300" onClick={handleClick}>Album Cover</button>
                     <input type="file" ref={uploadInputRef} onChange={handleFileChange} style={{ display: "none" }} />
                     <label ref={filenameLabelRef} className="block py-2.5 px-4 w-full text-sm text-dark-black mt-2"></label>
                 </div>

@@ -167,57 +167,6 @@ export default function Table({ songs }) {
             <Pagination links={songs.meta.links} />
 
             <EditSongModal show={editSongModal} onClose={closeModal} song={song}/>
-            {/* <Modal show={editModal} onClose={closeModal}>
-                <form className="p-6" onSubmit={onSubmit}>
-                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center"></h1>
-                    <p className="text-md mb-8 text-dark-black text-center">Editing "{song?.title || ''}"</p>
-                        <div className="grid cols-2 my-2">
-                            <div>
-                                <InputLabel htmlFor="title" className="text-nowrap mb-1 ms-1"  value="Song Name" />
-                                <TextInput id="title" type="text" name="title" value={data.title} isFocused={true} onChange={(e) =>  setData("title", e.target.value)} className="text-black w-full" />
-                            </div>
-                            <div>
-                                <InputLabel htmlFor="album" className="text-nowrap mb-1 ms-1"  value="Album Title" />
-                                <TextInput id="album" type="text" name="album" value={data.album} onChange={(e) =>  setData("album", e.target.value)} className="text-black w-full" />
-                            </div>
-                            <div>
-                                <InputLabel value="Minutes" />
-                                <TextInput type="number" value={minutes} onChange={(e) => setMinutes(e.target.value)} min="0" />
-                                <InputLabel value="Seconds" />
-                                <TextInput type="number" value={seconds} onChange={(e) => setSeconds(e.target.value)} min="0" max="59" />
-                            </div>
-                            <div>
-                                <InputLabel htmlFor="bpm" className="text-nowrap mb-1 ms-1"  value="BPM" />
-                                <TextInput id="bpm" type="number" name="bpm" value={data.bpm} onChange={(e) =>  setData("bpm", e.target.value)} className="text-black w-full" />
-                            </div>
-                            <div>
-                                <InputLabel htmlFor="key" className="text-nowrap mb-1 ms-1"  value="Key" />
-                                <TextInput id="key" type="text" name="key" value={data.key} onChange={(e) =>  setData("key", e.target.value)} className="text-black w-full" />
-                            </div>
-                            <div>
-                                <InputLabel htmlFor="tuning" className="text-nowrap mb-1 ms-1"  value="Tuning" />
-                                <TextInput id="tuning" type="text" name="tuning" value={data.tuning} onChange={(e) =>  setData("tuning", e.target.value)} className="text-black w-full" />
-                            </div>
-                            <div>
-                                <InputLabel htmlFor="cover" className="text-nowrap mb-1 ms-1"  value="Cover" />
-                                <select id="cover" name="cover" defaultValue="" onChange={(e) => setData("cover", stringToBool(e.target.value))} className="text-black w-full rounded-lg">
-                                    <option value="" disabled>Select Option</option>
-                                    <option value='true'>Yes</option>
-                                    <option value='false'>No</option>
-                                </select>
-                            </div>
-                            <div>
-                                <InputLabel htmlFor="metronome" className="text-nowrap mb-1 ms-1"  value="Metronome" />
-                                <select id="metronome" name="metronome" defaultValue="" onChange={(e) => setData("metronome", stringToBool(e.target.value))} className="text-black w-full rounded-lg">
-                                    <option value="" disabled>Select Option</option>
-                                    <option value='true'>Yes</option>
-                                    <option value='false'>No</option>
-                                </select>
-                            </div>
-                        </div>
-                    <PrimaryButton className="mt-4" onClick={handleConvert}>Save</PrimaryButton>
-                </form>
-            </Modal> */}
         </>
     )
 };
