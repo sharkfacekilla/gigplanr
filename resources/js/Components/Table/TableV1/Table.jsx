@@ -12,87 +12,8 @@ import { useState } from "react";
 import EditSongModal from '@/Components/Modals/EditSongModal';
 
 export default function Table({ songs }) {
-
-    // const [editModal, setEditModal] = useState(false);
     const [song, setSong] = useState(null);
     const [editSongModal, setEditSongModal] = useState(false);
-
-    // const [minutes, setMinutes] = useState('');
-    // const [seconds, setSeconds] = useState('');
-    
-    // const handleConvert = () => {
-    //   const totalMilliseconds = (parseInt(minutes) || 0) * 60 * 1000 +
-    //                             (parseInt(seconds) || 0) * 1000;
-    //   console.log(totalMilliseconds);
-    //   setData("duration", totalMilliseconds);
-    // };
-
-    // function stringToBool(str) {
-    //     return str === 'true';
-    // }
-
-    // function convertMillisecondsToTime(ms) {
-    //     const totalSeconds = Math.floor(ms / 1000);
-    //     const minutes = Math.floor(totalSeconds / 60);
-    //     const seconds = totalSeconds % 60;
-      
-    //     return {
-    //       minutes,
-    //       seconds
-    //     };
-    //   }
-
-    // const { data, setData, patch, errors } = useForm({
-    //     title: songs?.data.title || '',
-    //     album: songs?.data.album || '',
-    //     length: song?.length || 0,
-    //     bpm: song?.bpm || 0,
-    //     key: song?.key || '',
-    //     tuning: song?.tuning || '', 
-    //     cover: song?.cover|| 0,
-    //     metronome: song?.metronome || 0,
-    //     _method: "PATCH",
-    // });
-    
-    // const handleClick = (song) => {
-    //     setSong(song);
-    //     const { minutes, seconds } = convertMillisecondsToTime(song?.length);
-
-    //     setData({
-    //         title: song.title,
-    //         album: song.album,
-    //         length: song?.length,
-    //         song_minutes: minutes,
-    //         song_seconds: seconds,
-    //         bpm: song.bpm,
-    //         key: song.key,
-    //         tuning: song.tuning,
-    //         cover: song.cover,
-    //         metronome: song.metronome,
-    //     });
-    //     setMinutes(minutes);
-    //     setSeconds(seconds);
-
-    //     openModal();
-    // }
-    
-    // const openModal = () => {
-    //     setEditModal(true);
-    // }
-    
-    // const closeModal = () => {
-    //     setEditModal(false);
-    //     setSong(null);
-    // };
-    
-    // const onSubmit = (e) => {
-    //     e.preventDefault();
-    //     handleConvert();
-
-    //     console.log(data);
-    //     patch(route('songs.update', song.id), data);
-    //     closeModal();
-    // };
 
     const openModal = () => {
         setEditSongModal(true);
