@@ -6,6 +6,9 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import GoogleButton from '@/Components/GoogleButton';
+import FacebookButton from '@/Components/FacebookButton';
+import TwitterButton from '@/Components/TwitterButton';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -25,13 +28,16 @@ export default function Login({ status, canResetPassword }) {
 
         post(route('login'));
     };
+    const signIn = "Sign in";
 
     return (
         <GuestLayout>
             <Head title="Log in" />
 
             {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            <div className="w-full flex justify-center mx-2 ">
 
+            </div>
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
@@ -41,13 +47,13 @@ export default function Login({ status, canResetPassword }) {
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full font-light"
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
                     />
-
                     <InputError message={errors.email} className="mt-2 text-red" />
+
                 </div>
 
                 <div className="mt-4">
@@ -58,7 +64,7 @@ export default function Login({ status, canResetPassword }) {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full font-light"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
                     />
@@ -92,6 +98,14 @@ export default function Login({ status, canResetPassword }) {
                     </PrimaryButton>
                 </div>
             </form>
+            <div className="line-with-text">
+                <span className="mb-1">Or</span>
+            </div>
+            <div className="mt-4 w-full">
+                <FacebookButton text={signIn}/>
+                <GoogleButton text={signIn} />
+                <TwitterButton text={signIn}/>
+            </div>
         </GuestLayout>
     );
 }

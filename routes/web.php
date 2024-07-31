@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ProviderController;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Http\Controllers;
@@ -12,6 +13,7 @@ use App\Http\Controllers\ProfileController;
 use Tests\Feature\Auth\EmailVerificationTest;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Laravel\Socialite\Facades\Socialite;
 
 
 //Home Page
@@ -23,6 +25,10 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/auth/{provider}/redirect', [ProviderController::class, 'redirect']);
+Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback']);
+
 
 
 //Dashbaord Page (Probably will be unused)

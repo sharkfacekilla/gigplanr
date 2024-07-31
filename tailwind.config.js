@@ -13,7 +13,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans],
+                sans: ['Comfortaa', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 'black': '#0B132B',
