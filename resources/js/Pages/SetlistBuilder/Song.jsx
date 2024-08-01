@@ -4,39 +4,39 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-export default function Song({ song, onDragStart, onDragOver, onDrop, onRemove, index }) {
-    const id = song.id
-    const {attributes, listeners, setNodeRef, transform, transition} = useSortable({id})
+export default function SongItem({ song, onRemove }) {
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: song.id });
 
-    const style = {
-        transition,
-        transform: CSS.Transform.toString(transform)
-    }
+  const style = {
+    transition: transition,
+    transform: CSS.Transform.toString(transform),
+  };
 
-    // console.log(style);
   return (
-    <>
-        <div ref={setNodeRef} {...attributes} {...listeners} style={style}>
-            <li
-            key={song.id}
-            
-            className="bg-muted rounded-md p-4 flex items-center justify-between"
-            >
-            <div className="flex items-center gap-4">
-                <GripIcon className="w-4 h-4 text-muted-foreground" />
-                <div>
-                <h3 className="font-semibold">{song.title}</h3>
-                <p className="text-muted-foreground">
-                    {song.artist} - {song.duration} ({song.key})
-                </p>
-                </div>
-            </div>
-            <PrimaryButton variant="ghost" size="icon" onClick={() => onRemove(song.id)}>
-                <XIcon className="w-4 h-4 text-muted-foreground" />
-            </PrimaryButton>
-            </li>
-
+    <li className="bg-muted rounded-md p-4 flex items-center justify-between">
+      <div ref={setNodeRef} {...attributes} {...listeners} style={style} className="flex-grow">
+        <div className="flex items-center gap-4">
+          <GripIcon className="w-4 h-4 text-muted-foreground" />
+          <div>
+            <h3 className="font-semibold">{song.title}</h3>
+            <p className="text-muted-foreground">
+              {song.artist} - {song.duration} ({song.key})
+            </p>
+          </div>
         </div>
-    </>
+      </div>
+      <div className="flex-shrink-0 ml-4">
+        <PrimaryButton
+          variant="ghost"
+          size="icon"
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent drag event
+            onRemove(song.id);
+          }}
+        >
+          <XIcon className="w-4 h-4 text-muted-foreground" />
+        </PrimaryButton>
+      </div>
+    </li>
   );
 }
