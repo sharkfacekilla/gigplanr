@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ProviderController;
+use App\Http\Controllers\SetlistController;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Http\Controllers;
@@ -29,9 +30,9 @@ Route::get('/', function () {
 Route::get('/auth/{provider}/redirect', [ProviderController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback']);
 
+Route::resource('/list', SetlistController::class);
 
-
-//Dashbaord Page (Probably will be unused)
+//Dashbaord Page (Probably will be unused for now)
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

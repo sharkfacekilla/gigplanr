@@ -18,11 +18,12 @@ class SongController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->paginate(10)->onEachSide(1);
-        return Inertia::render('Admin/Library/Index', [
-            'songs' => SongResource::collection($songs)
+        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->get();
+        return Inertia::render('Setlist', [
+            'songs' => ['data' => $songs]
         ]);
     }
+    
 
     /**
      * Show the form for creating a new resource.

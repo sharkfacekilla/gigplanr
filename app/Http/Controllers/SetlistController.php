@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Songs;
 use Illuminate\Http\Request;
+use App\Http\Resources\SongResource;
 
 class SetlistController extends Controller
 {
@@ -11,7 +14,11 @@ class SetlistController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = auth()->user()->id;
+        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->get();
+        return Inertia::render('SetlistBuilder/SetlistBuilder', [
+            'songs' => SongResource::collection($songs)
+        ]);
     }
 
     /**
