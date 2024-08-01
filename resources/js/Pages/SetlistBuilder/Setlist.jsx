@@ -13,7 +13,7 @@ export default function Setlist({ setlist, onRemove }) {
   };
 
   return (
-          <SortableContext items={setlist.map(song => song.id)} strategy={verticalListSortingStrategy}>
+          <SortableContext items={setlist} strategy={verticalListSortingStrategy}>
     <div ref={setNodeRef} className="bg-background rounded-lg shadow-sm">
       <div className="p-6 border-b">
         <h1 className="text-2xl font-bold">Setlist Builder</h1>
