@@ -87,8 +87,10 @@ export default function Table({ songs }) {
                 </table>
             </div>
             <Pagination links={songs.meta.links} />
-
+            
+            
             <EditSongModal show={editSongModal} onClose={closeModal} song={song}/>
+            
         </>
     )
 };

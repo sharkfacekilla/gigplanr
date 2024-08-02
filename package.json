@@ -25,6 +25,8 @@
         "@emotion/react": "^11.13.0",
         "@emotion/styled": "^11.13.0",
         "@heroicons/react": "^2.1.5",
-        "@mui/material": "^5.16.6"
+        "@mui/material": "^5.16.6",
+        "install": "^0.13.0",
+        "npm": "^10.8.2"
     }
 }

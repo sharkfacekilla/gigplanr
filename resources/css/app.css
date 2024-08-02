@@ -49,6 +49,9 @@
   z-index: 1;
 }
 
+.backdrop-blue {
+  backdrop-filter: blur(10px);
+}
 .line-with-text {
   display: flex;
   align-items: center;

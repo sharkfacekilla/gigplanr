@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Drawer, Box, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import EditSongModal from '@/Components/Modals/EditSongModal';
+import { Head, Link, router } from "@inertiajs/react";
+import DeleteSongModal from '@/Components/Modals/DeleteSongModal';
 
 export default function SongDrawer({ open, toggleDrawer, songs, selectedAlbum }) {
   const filteredSongs = selectedAlbum ? songs.data.filter(song => song.album === selectedAlbum.album).sort((a,b) => a.album_track_number - b.album_track_number) : [];
   const [song, setSong] = useState(null);
   const [editSongModal, setEditSongModal] = useState(false);
+  const [deleteSongModal, setDeleteSongModal] = useState(false);
 
   const openModal = () => {
       setEditSongModal(true);
@@ -14,6 +17,18 @@ export default function SongDrawer({ open, toggleDrawer, songs, selectedAlbum })
   const closeModal = () => {
       setEditSongModal(false);
   };
+
+    const handleDelete = () => {
+        setDeleteSongModal(true);
+    };
+
+    const closeDeleteModal = () => {
+        setDeleteSongModal(false);
+    };
+
+
+
+
   const list = () => (
     <Box
       sx={{ width: 'auto' }}
@@ -32,7 +47,12 @@ export default function SongDrawer({ open, toggleDrawer, songs, selectedAlbum })
                         setSong(song);
                         openModal()
                 }}></FilePenIcon>
-                <TrashIcon className="text-red"/>
+                <TrashIcon 
+                    className="text-red ms-12" 
+                    onClick={() => {
+                        setSong(song);
+                        handleDelete()
+                    }} />
           </ListItem>
         ))}
       </List>
@@ -49,10 +69,13 @@ export default function SongDrawer({ open, toggleDrawer, songs, selectedAlbum })
         >
         {list()}
         </Drawer>
+        <>
         <EditSongModal show={editSongModal} onClose={closeModal} song={song}/>
+        </>
+        <DeleteSongModal show={deleteSongModal} onClose={closeDeleteModal} song={song} />
     </>
     
-  );
+);
 }
 
 function FilePenIcon(props) {

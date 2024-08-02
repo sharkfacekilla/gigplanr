@@ -18,28 +18,25 @@ export default function Index({ auth, songs }) {
     }
 
     return (
-        <AuthenticatedLayout user={auth.user}>
-            <Head title="Library" />
+        <>
+            <AuthenticatedLayout user={auth.user}>
+                <Head title="Library" />
 
-            <div className="py-12">
-                <div className="max-w-8xl mx-auto sm:px-6 lg:px-8">
-                    <div className="overflow-hidden">
-                        <div className="p-6">
-                            <h1 className="text-2xl text-white">Library</h1>
-                            <button className="text-white bg-teal py-2 px-4 rounded-3xl hover:bg-light-blue" onClick={openModal}>Add Song</button>
-                            <p>Search Spotify</p>
-                            {/* <Table songs={songs} /> */}
-                            <TableTest songs={songs}/>
+                <div className="py-12">
+                    <div className="max-w-8xl mx-auto sm:px-6 lg:px-8">
+                        <div className="overflow-hidden">
+                            <div className="p-6">
+                                <h1 className="text-2xl text-white">Library</h1>
+                                <button className="text-white bg-teal py-2 px-4 rounded-3xl hover:bg-light-blue" onClick={openModal}>Add Song</button>
+                                <p>Search Spotify</p>
+                                {/* <Table songs={songs} /> */}
+                                <TableTest songs={songs}/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {newSongModal && 
-                <>
-                    <div className="backdrop" onClick={closeModal}></div>
-                    <NewSongModal show={newSongModal} onClose={closeModal} />
-                </>
-            }
-        </AuthenticatedLayout>
+                <NewSongModal show={newSongModal} onClose={closeModal} />     
+            </AuthenticatedLayout>
+        </>
     );
 };
