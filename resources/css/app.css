@@ -77,3 +77,13 @@
 .muted-card {
   background: rgba(50, 80, 107);
 }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Hide spin buttons */
+  margin: 0; /* Remove margin */
+}
+
+input[type=number] {
+  -moz-appearance: textfield; /* Hide spin buttons */
+}

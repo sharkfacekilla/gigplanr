@@ -30,7 +30,7 @@ Route::get('/', function () {
 Route::get('/auth/{provider}/redirect', [ProviderController::class, 'redirect']);
 Route::get('/auth/{provider}/callback', [ProviderController::class, 'callback']);
 
-Route::resource('/list', SetlistController::class);
+
 
 //Dashbaord Page (Probably will be unused for now)
 Route::get('/dashboard', function () {
@@ -50,9 +50,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //Admin Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/songs', SongController::class);
-    Route::post('/songs/store', [SongController::class, 'store'])->name('songs.store');
+    // Route::post('/songs/store', [SongController::class, 'store'])->name('songs.store');
     Route::post('/songs/storeNew', [SongController::class, 'storeNew'])->name('songs.store.new');
     Route::get('/library', [SongController::class, 'index'])->name('library.index');
+    Route::resource('/list', SetlistController::class);
 });
 
 //Visitor Routes
@@ -60,21 +61,21 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 //Email Routes from docs
-Route::get('/email/verify', function () {
-    return view('auth.verify-email');
-})->middleware('auth')->name('verification.notice');
+// Route::get('/email/verify', function () {
+//     return view('auth.verify-email');
+// })->middleware('auth')->name('verification.notice');
  
-Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    $request->fulfill();
+// Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//     $request->fulfill();
  
-    return redirect('/home');
-})->middleware(['auth', 'signed'])->name('verification.verify');
+//     return redirect('/home');
+// })->middleware(['auth', 'signed'])->name('verification.verify');
 
-Route::post('/email/verification-notification', function (Request $request) {
-    $request->user()->sendEmailVerificationNotification();
+// Route::post('/email/verification-notification', function (Request $request) {
+//     $request->user()->sendEmailVerificationNotification();
  
-    return back()->with('message', 'Verification link sent!');
-})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+//     return back()->with('message', 'Verification link sent!');
+// })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 
 

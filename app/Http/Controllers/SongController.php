@@ -18,7 +18,7 @@ class SongController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->paginate(10)->onEachSide(1);
+        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->get();
         return Inertia::render('Admin/Library/Index', [
             'songs' => SongResource::collection($songs)
         ]);
@@ -42,9 +42,12 @@ class SongController extends Controller
         $songs = $data['songs'];
         $user_id = auth()->user()->id;
         foreach ($songs as $song) {
-            $song['user_id'] = $user_id;
-            $song['status'] = "other";
-            Songs::create($song);
+            $existingSong = Songs::where('user_id', $user_id)->where('album', $song['album'])->where('title', $song['title'])->first();
+            if (!$existingSong) {
+                $song['user_id'] = $user_id;
+                $song['status'] = "other";
+                Songs::create($song);
+            }
         }
         return redirect()->route('library.index');
     }
@@ -86,7 +89,7 @@ class SongController extends Controller
     public function update(UpdateSongRequest $request, Songs $song)
     {        
         $data = $request->validated();
-        
+        dd($data);
         $song->update($data);
     }
 

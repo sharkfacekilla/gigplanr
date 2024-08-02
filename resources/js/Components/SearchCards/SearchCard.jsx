@@ -116,6 +116,7 @@ export default function SearchCard({ item, auth }) {
         // If the checkbox is checked, add the song to the list
         if (checked) {
             updatedSongs.push({
+                id: track.id,
                 title: track.name,
                 length: track.duration_ms || track.length,
                 album_track_number: track.track_number,
@@ -138,6 +139,19 @@ export default function SearchCard({ item, auth }) {
         console.log('Songs', data.songs);
     
         post(route('songs.store'));
+    };
+
+    const selectAllTracks = () => {
+        // Set all tracks to be selected
+        setData('songs', tracks.map(track => ({
+            id: track.id,
+            title: track.name,
+            length: track.duration_ms || track.length,
+            album_track_number: track.track_number,
+            album: item.name,
+            album_cover: item.album_cover || item.images[0].url,
+            artist: item.artist,
+        })));
     };
 
     // Renders the search card component
@@ -167,12 +181,15 @@ export default function SearchCard({ item, auth }) {
                 <form className="p-6" onSubmit={onSubmit}>
                     <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">{title}</h1>
                     <p className="text-md mb-8 text-dark-black text-center">Select tracks to add</p>
-                    {tracks.map((track, index) => (
+                    <div className="text-center mb-4">
+                        <PrimaryButton type="button" onClick={selectAllTracks}>Select All</PrimaryButton>
+                    </div>
+                    {tracks.map((track) => (
                         <div className="grid grid-cols-12 my-2" key={track.id}>
                             <Checkbox
                                 className="mx-auto my-auto"
+                                checked={data.songs.some(song => song.id === track.id)} // Reflects selection state
                                 onChange={(e) => changeForm(e, track)}
-                                value={track.name}
                             />
                             <div className="col-span-1 my-auto">
                                 <p>{track.track_number}</p>

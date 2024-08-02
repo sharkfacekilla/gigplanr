@@ -19,6 +19,7 @@ export default {
                 'black': '#0B132B',
                 'dark-blue': '#1c2541',
                 'light-blue': '#3A506B',
+                'blue': "#3E7A94",
                 'teal': '#72dbbc',
                 'green': '#5BC0B3',
                 'white': '#FFFFFF',

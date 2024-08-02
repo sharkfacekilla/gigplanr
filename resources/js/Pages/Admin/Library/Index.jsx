@@ -1,5 +1,6 @@
 import NewSongModal from '@/Components/Modals/NewSongModal';
 import Table from '@/Components/Table/TableV1/Table';
+import TableTest from '@/Components/TableTest/TableTest';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
@@ -27,7 +28,8 @@ export default function Index({ auth, songs }) {
                             <h1 className="text-2xl text-white">Library</h1>
                             <button className="text-white bg-teal py-2 px-4 rounded-3xl hover:bg-light-blue" onClick={openModal}>Add Song</button>
                             <p>Search Spotify</p>
-                            <Table songs={songs} />
+                            {/* <Table songs={songs} /> */}
+                            <TableTest songs={songs}/>
                         </div>
                     </div>
                 </div>
