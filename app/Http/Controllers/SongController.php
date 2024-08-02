@@ -55,7 +55,7 @@ class SongController extends Controller
     public function storeNew(StoreNewSongRequest $request) 
     {
         $data = $request->validated();
-        dd($data);
+        
         $data['user_id'] = auth()->user()->id;
         if ($request->hasFile('album_cover')) {
             $file = $request->file('album_cover');
@@ -89,7 +89,7 @@ class SongController extends Controller
     public function update(UpdateSongRequest $request, Songs $song)
     {        
         $data = $request->validated();
-        dd($data);
+        
         $song->update($data);
     }
 

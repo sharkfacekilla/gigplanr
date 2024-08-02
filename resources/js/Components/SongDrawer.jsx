@@ -6,6 +6,7 @@ import DeleteSongModal from '@/Components/Modals/DeleteSongModal';
 
 export default function SongDrawer({ open, toggleDrawer, songs, selectedAlbum }) {
   const filteredSongs = selectedAlbum ? songs.data.filter(song => song.album === selectedAlbum.album).sort((a,b) => a.album_track_number - b.album_track_number) : [];
+  const otherSongs = songs.data.filter(song => !song.album).sort((a, b) => a.album_track_number - b.album_track_number);
   const [song, setSong] = useState(null);
   const [editSongModal, setEditSongModal] = useState(false);
   const [deleteSongModal, setDeleteSongModal] = useState(false);
@@ -36,28 +37,40 @@ export default function SongDrawer({ open, toggleDrawer, songs, selectedAlbum })
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
+       <ul className="divide-y divide-gray-700">
         {filteredSongs.map((song, index) => (
-          <ListItem key={song.id}>
-            <p className="me-4">{index + 1}</p>
-                <ListItemText primary={song.title} />
-                <FilePenIcon 
-                    className="text-white me-4" 
-                    onClick={() => { 
-                        setSong(song);
-                        openModal()
-                }}></FilePenIcon>
-                <TrashIcon 
-                    className="text-red ms-12" 
-                    onClick={() => {
-                        setSong(song);
-                        handleDelete()
-                    }} />
-          </ListItem>
+          <li key={song.id} className="flex items-start p-4 bg-gray-800 text-white">
+            <span className="font-bold text-lg mr-4">{index + 1}</span>
+            <div className="flex-1 flex flex-col justify-between">
+              <div className="flex justify-between items-start mb-1">
+                <span className="font-semibold">{song.title}</span>
+              </div>
+              <span className="text-gray-400 text-sm">Length: {song.length}</span>
+              <span className="text-gray-400 text-sm">Key: {song.key ? song.key : "N/A"}</span>
+              <span className="text-gray-400 text-sm">Tuning: {song.tuning? song.tuning : "N/A"}</span>
+            </div>
+            <div className="flex space-x-4 ml-4 my-auto">
+              <FilePenIcon 
+                className="w-6 h-6 text-white cursor-pointer hover:text-teal"
+                onClick={() => { 
+                  setSong(song);
+                  openModal();
+                }}
+              />
+              <TrashIcon 
+                className="w-6 h-6 text-red cursor-pointer hover:text-red"
+                onClick={() => {
+                  setSong(song);
+                  handleDelete();
+                }} 
+              />
+            </div>
+          </li>
         ))}
-      </List>
+      </ul>
     </Box>
   );
+
 
   return (
     <>

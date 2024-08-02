@@ -23,7 +23,7 @@ class StoreNewSongRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255', 'min:1'],
-            'length' => ['required', 'integer'],
+            'length' => ['required', 'integer', 'min:1'],
             'artist' => ['nullable', 'string', 'max:255', 'min:1'],
             'album' => ['nullable', 'string', 'max:255', 'min:1'],
             'album_cover' => ['nullable', 'image', 'mimes:jpeg,png,jpg'],

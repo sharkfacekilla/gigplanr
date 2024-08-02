@@ -88,7 +88,7 @@ export default function NewSongModal({ show, onClose }) {
                         <div className="flex flex-wrap items-center my-auto">
                             <div className="w-full">
                                 <InputLabel htmlFor="title" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Song Name" />
-                                <input id="title" type="text" name="title" onChange={(e) => setData("title", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
+                                <input required id="title" type="text" name="title" onChange={(e) => setData("title", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
                             </div>
                             <div className="w-full">
                                 <InputLabel htmlFor="album" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Album Title" />
@@ -111,11 +111,11 @@ export default function NewSongModal({ show, onClose }) {
                         <div className="flex items-start gap-4 w-full">
                                 <div className="flex flex-col w-1/2">
                                     <InputLabel value="Minutes" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" />
-                                    <input className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" type="number" value={minutes} onChange={(e) => setMinutes(e.target.value)} min="0" />
+                                    <input required className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" type="number" value={minutes} onChange={(e) => setMinutes(e.target.value)} min="0" />
                                 </div>
                                 <div className="flex flex-col w-1/2">
                                     <InputLabel value="Seconds" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" />
-                                    <input className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" type="number" value={seconds} onChange={(e) => setSeconds(e.target.value)} min="0" max="59" />
+                                    <input required className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" type="number" value={seconds} onChange={(e) => setSeconds(e.target.value)} min="0" max="59" />
                                 </div>
                             </div>
 
