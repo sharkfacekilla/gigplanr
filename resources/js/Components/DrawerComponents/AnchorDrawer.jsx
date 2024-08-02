@@ -26,7 +26,7 @@ export default function AnchorDrawer({ toggleDrawer, songs, handleAlbumSelect })
       		<div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
         		<div className="grid grid-cols-2 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
           			{sortedAlbums.map((album, index) => (
-            			<div key={index} className="p-4 bg-blue rounded-xl shadow-xl shadow-dark-black hover:shadow-lg hover:shadow-teal move-up">
+            			<div key={index} className="p-4 bg-blue/80 rounded-xl shadow-xl shadow-dark-black hover:shadow-lg hover:shadow-teal move-up">
             				<div role="button" tabIndex={0} onClick={() => handleAlbumSelect(album)} className="relative w-full cursor-pointer">
                 				<div className="w-full" style={{ paddingTop: '100%', position: 'relative' }}>
                   					<img
