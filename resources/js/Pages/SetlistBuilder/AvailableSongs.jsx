@@ -49,10 +49,12 @@ export default function AvailableSongs({ availableSongs, onAddToSetlist }) {
         <h2 className="text-xl font-bold">Available Songs</h2>
         <p className="text-muted-foreground">Click the button to add songs to your setlist.</p>
       </div>
-      <div className="p-6 space-y-4 scrollable-container"> {/* Apply the scrollable-container class */}
-        {renderSongsByStatus("staple")}
+      <div className="p-6 space-y-4 scrollable-container">
+      {renderSongsByStatus("staple")}
         {renderSongsByStatus("most_often")}
+        {renderSongsByStatus("rarities") && <hr />}
         {renderSongsByStatus("rarities")}
+        {renderSongsByStatus("other") && <hr />}
         {renderSongsByStatus("other")}
       </div>
     </div>
