@@ -46,7 +46,7 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
-  z-index: 1; /* Make sure this is below the modal */
+  z-index: 1;
 }
 
 .line-with-text {
@@ -60,11 +60,20 @@
 .line-with-text::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid rgba(34, 34, 34, 0.2); /* Updated to 50% opacity */
+  border-bottom: 1px solid rgba(34, 34, 34, 0.2);
   margin: 0 10px;
 }
-/* Add this to your CSS file or style tag */
+
+
 .scrollable-container {
-  max-height: 80vh; /* Adjust this value based on your layout */
+  max-height: 80vh;
   overflow-y: auto;
+}
+
+.muted {
+  background: rgba(34, 34, 34);
+}
+
+.muted-card {
+  background: rgba(50, 80, 107);
 }
