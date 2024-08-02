@@ -33,11 +33,11 @@ export default function Index({ auth, songs }) {
                 </div>
             </div>
             {newSongModal && 
-            <>
-                <div className="backdrop" onClick={closeModal}></div>
+                <>
+                    <div className="backdrop" onClick={closeModal}></div>
                     <NewSongModal show={newSongModal} onClose={closeModal} />
-            </>
+                </>
             }
         </AuthenticatedLayout>
     );
-}
+};

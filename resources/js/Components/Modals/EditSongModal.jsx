@@ -114,90 +114,90 @@ export default function NewSongModal({ show, onClose, song }) {
 
     return (
         <>
-        <Modal show={show} onClose={onClose}>
-            <form className="p-6 max-h-screen overflow-y-auto" onSubmit={onSubmit} encType="multipart/form-data">
-                <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">Edit "{song?.title}"</h1>
-                <div className="grid grid-cols-2 gap-4 my-2">
-                    <div className="flex flex-wrap items-center my-auto">
-                        <div className="w-full">
-                            <InputLabel htmlFor="title" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Song Name" />
-                            <input id="title" type="text" value={data.title} name="title" isFocused={true} onChange={(e) => setData("title", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
-                        </div>
-                        <div className="w-full">
-                            <InputLabel htmlFor="album" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Album Title" />
-                            <input id="album" type="text" name="album" onChange={(e) => setData("album", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
-                        </div>
-                        <div className="w-full">
-                            <InputLabel htmlFor="bpm" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="BPM" />
-                            <input id="bpm" type="number" name="bpm" value={data.bpm} onChange={(e) => setData("bpm", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
-                        </div>
-                        <div className="w-full">
-                            <InputLabel htmlFor="artist" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Artist" />
-                            <input id="artist" value={data.artist} type="text" name="artist" onChange={(e) => setData("artist", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
-                        </div>
-                        <div className="w-full">
-                            <InputLabel htmlFor="album_track_number" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Track Number" />
-                            <input id="album_track_number" type="number" name="album_track_number" onChange={(e) => setData("album_track_number", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
-                        </div>
-                    </div>
-                    <div className="flex flex-wrap items-center my-auto">
-                    <div className="flex items-start gap-4 w-full">
-                            <div className="flex flex-col w-1/2">
-                                <InputLabel value="Minutes" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" />
-                                <input className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" type="number" value={minutes} onChange={(e) => setMinutes(e.target.value)} min="0" />
+            <Modal show={show} onClose={onClose}>
+                <form className="p-6 max-h-screen overflow-y-auto" onSubmit={onSubmit} encType="multipart/form-data">
+                    <h1 className="mb-4 text-2xl font-extrabold leading-none tracking-tight text-dark-black md:text-2xl lg:text-2xl text-center">Edit "{song?.title}"</h1>
+                    <div className="grid grid-cols-2 gap-4 my-2">
+                        <div className="flex flex-wrap items-center my-auto">
+                            <div className="w-full">
+                                <InputLabel htmlFor="title" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Song Name" />
+                                <input id="title" type="text" value={data.title} name="title" isFocused={true} onChange={(e) => setData("title", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
                             </div>
-                            <div className="flex flex-col w-1/2">
-                                <InputLabel value="Seconds" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" />
-                                <input className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" type="number" value={seconds} onChange={(e) => setSeconds(e.target.value)} min="0" max="59" />
+                            <div className="w-full">
+                                <InputLabel htmlFor="album" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Album Title" />
+                                <input id="album" type="text" name="album" onChange={(e) => setData("album", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
+                            </div>
+                            <div className="w-full">
+                                <InputLabel htmlFor="bpm" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="BPM" />
+                                <input id="bpm" type="number" name="bpm" value={data.bpm} onChange={(e) => setData("bpm", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
+                            </div>
+                            <div className="w-full">
+                                <InputLabel htmlFor="artist" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Artist" />
+                                <input id="artist" value={data.artist} type="text" name="artist" onChange={(e) => setData("artist", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
+                            </div>
+                            <div className="w-full">
+                                <InputLabel htmlFor="album_track_number" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Track Number" />
+                                <input id="album_track_number" type="number" name="album_track_number" onChange={(e) => setData("album_track_number", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
                             </div>
                         </div>
+                        <div className="flex flex-wrap items-center my-auto">
+                        <div className="flex items-start gap-4 w-full">
+                                <div className="flex flex-col w-1/2">
+                                    <InputLabel value="Minutes" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" />
+                                    <input className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" type="number" value={minutes} onChange={(e) => setMinutes(e.target.value)} min="0" />
+                                </div>
+                                <div className="flex flex-col w-1/2">
+                                    <InputLabel value="Seconds" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" />
+                                    <input className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" type="number" value={seconds} onChange={(e) => setSeconds(e.target.value)} min="0" max="59" />
+                                </div>
+                            </div>
 
-                        <div className="w-full">
-                            <InputLabel htmlFor="key" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Key" />
-                            <input id="key" type="text" name="key" value={data.key} onChange={(e) => setData("key", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
-                        </div>
-                        <div className="w-full">
-                            <InputLabel htmlFor="tuning" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Tuning" />
-                            <input id="tuning" type="text" name="tuning" value={data.tuning} onChange={(e) => setData("tuning", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
-                        </div>
-                        <div className="flex flex-col w-full">
-                            <InputLabel htmlFor="cover" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Cover" />
-                            <select id="cover" name="cover" defaultValue="" onChange={(e) => setData("cover", stringToBool(e.target.value))} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer">
-                                <option value="" disabled>Y/N</option>
-                                <option value='true'>Yes</option>
-                                <option value='false'>No</option>
-                            </select>
-                        </div>
-                        <div className="flex flex-col w-full">
-                            <InputLabel htmlFor="metronome" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Metronome" />
-                            <select id="metronome" name="metronome" defaultValue="" onChange={(e) => setData("metronome", stringToBool(e.target.value))} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer">
-                                <option value="" disabled>Y/N</option>
-                                <option value='true'>Yes</option>
-                                <option value='false'>No</option>
-                            </select>
+                            <div className="w-full">
+                                <InputLabel htmlFor="key" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Key" />
+                                <input id="key" type="text" name="key" value={data.key} onChange={(e) => setData("key", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
+                            </div>
+                            <div className="w-full">
+                                <InputLabel htmlFor="tuning" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Tuning" />
+                                <input id="tuning" type="text" name="tuning" value={data.tuning} onChange={(e) => setData("tuning", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer" />
+                            </div>
+                            <div className="flex flex-col w-full">
+                                <InputLabel htmlFor="cover" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Cover" />
+                                <select id="cover" name="cover" defaultValue="" onChange={(e) => setData("cover", stringToBool(e.target.value))} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer">
+                                    <option value="" disabled>Y/N</option>
+                                    <option value='true'>Yes</option>
+                                    <option value='false'>No</option>
+                                </select>
+                            </div>
+                            <div className="flex flex-col w-full">
+                                <InputLabel htmlFor="metronome" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Metronome" />
+                                <select id="metronome" name="metronome" defaultValue="" onChange={(e) => setData("metronome", stringToBool(e.target.value))} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer">
+                                    <option value="" disabled>Y/N</option>
+                                    <option value='true'>Yes</option>
+                                    <option value='false'>No</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="flex flex-col mt-8 w-full">
-                    <InputLabel htmlFor="status" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Song Status" />
-                    <select id="status" name="status" defaultValue="" onChange={(e) => setData("status", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer">
-                        <option value="" disabled>SelectStatus</option>
-                        <option value="staple">Staple</option>
-                        <option value="most_often">Most Often</option>
-                        <option value="rarities">Rarities</option>
-                        <option value="other">Everything Else</option>
-                    </select>
-                </div>
-                <div className="flex flex-col mt-8 w-full">
-                    <button className="block py-2.5 px-4 w-full text-sm text-dark-black bg-gray-200 rounded-lg border border-dark-black/20 focus:outline-none focus:ring-0 focus:border-teal hover:bg-gray-300" onClick={handleClick}>Album Cover</button>
-                    <input type="file" ref={uploadInputRef} onChange={(e) => handleFileChange(e)} style={{ display: "none" }} />
-                    <label ref={filenameLabelRef} className="block py-2.5 px-4 w-full text-sm text-dark-black mt-2"></label>
-                </div>
-                <div className="mt-4">
-                    <button type="submit" className="w-full py-2.5 w-full bg-teal rounded-lg text-sm px-4 mt-0.2" onClick={handleConvert}>Submit</button>
-                </div>
-            </form>
-        </Modal>
+                    <div className="flex flex-col mt-8 w-full">
+                        <InputLabel htmlFor="status" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Song Status" />
+                        <select id="status" name="status" defaultValue="" onChange={(e) => setData("status", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer">
+                            <option value="" disabled>SelectStatus</option>
+                            <option value="staple">Staple</option>
+                            <option value="most_often">Most Often</option>
+                            <option value="rarities">Rarities</option>
+                            <option value="other">Everything Else</option>
+                        </select>
+                    </div>
+                    <div className="flex flex-col mt-8 w-full">
+                        <button className="block py-2.5 px-4 w-full text-sm text-dark-black bg-gray-200 rounded-lg border border-dark-black/20 focus:outline-none focus:ring-0 focus:border-teal hover:bg-gray-300" onClick={handleClick}>Album Cover</button>
+                        <input type="file" ref={uploadInputRef} onChange={(e) => handleFileChange(e)} style={{ display: "none" }} />
+                        <label ref={filenameLabelRef} className="block py-2.5 px-4 w-full text-sm text-dark-black mt-2"></label>
+                    </div>
+                    <div className="mt-4">
+                        <button type="submit" className="w-full py-2.5 w-full bg-teal rounded-lg text-sm px-4 mt-0.2" onClick={handleConvert}>Submit</button>
+                    </div>
+                </form>
+            </Modal>
         </>
     )
 };

@@ -1,7 +1,6 @@
 import React from "react";
 import AvailableSong from "./AvailableSong";
 
-
 // Define the order of statuses and their display names
 const STATUS_ORDER = {
 	"staple": 1,
@@ -33,18 +32,18 @@ export default function AvailableSongs({ availableSongs, onAddToSetlist }) {
 
 		return (
 			<div key={status} className="mb-10">
-			  <h3 className="text-lg font-semibold mb-4 mt-4">{STATUS_DISPLAY_NAMES[status]}</h3>
-			  {filteredSongs.length > 0 ? (
-				filteredSongs.map((song) => (
-				  <div key={song.id} className="mb-4 pb-4 border muted-card border-white rounded-3xl">
-					<AvailableSong song={song} onAddToSetlist={onAddToSetlist} />
-				  </div>
-				))
-			  ) : (
-				<p>No songs found! Add some!</p>
-			  )}
+				<h3 className="text-lg font-semibold mb-4 mt-4">{STATUS_DISPLAY_NAMES[status]}</h3>
+			  	{filteredSongs.length > 0 ? (
+					filteredSongs.map((song) => (
+				  		<div key={song.id} className="mb-4 pb-4 border muted-card border-white rounded-3xl">
+							<AvailableSong song={song} onAddToSetlist={onAddToSetlist} />
+				  		</div>
+					))
+			  	) : (
+					<p>No songs found! Add some!</p>
+			  	)}
 			</div>
-		  );
+		);
 	};
 
 	return (
@@ -55,28 +54,28 @@ export default function AvailableSongs({ availableSongs, onAddToSetlist }) {
 		  	</div>
 		  	<div className="space-y-4 scrollable-container">
 				{renderSongsByStatus("staple") && (
-			  	<>
-					{renderSongsByStatus("staple")}
-					<hr />
-			  	</>
+			  		<>
+						{renderSongsByStatus("staple")}
+						<hr />
+				  	</>
 				)}
 				{renderSongsByStatus("most_often") && (
-			  	<>
-					{renderSongsByStatus("most_often")}
-					<hr />
-			  	</>
+				  	<>
+						{renderSongsByStatus("most_often")}
+						<hr />
+				  	</>
 				)}
 				{renderSongsByStatus("rarities") && (
-			  	<>
-					{renderSongsByStatus("rarities")}
-					<hr />
-			  	</>
+				  	<>
+						{renderSongsByStatus("rarities")}
+						<hr />
+			  		</>
 				)}
 				{renderSongsByStatus("other") && (
-			  	<>
-					{renderSongsByStatus("other")}
-					<hr />
-			  	</>
+			  		<>
+						{renderSongsByStatus("other")}
+						<hr />
+			  		</>
 				)}
 		  	</div>
 		</div>

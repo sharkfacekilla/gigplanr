@@ -21,4 +21,4 @@ export default function AvailableSong({ song, onAddToSetlist }) {
 			</div>
 		</>
   	);
-}
+};
