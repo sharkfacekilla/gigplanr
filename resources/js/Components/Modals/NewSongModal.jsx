@@ -67,6 +67,9 @@ export default function NewSongModal({ show, onClose }) {
         post(route('songs.store.new'), data);
         onClose();
         reset();
+        setMinutes('');
+        setSeconds('');
+
     }; 
 
     
