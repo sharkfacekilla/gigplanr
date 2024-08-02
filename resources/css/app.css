@@ -90,3 +90,14 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
   -moz-appearance: textfield; /* Hide spin buttons */
 }
+
+.move-up {
+  transform: translateY(0px);
+  transition: transform 0.3s ease;
+
+}
+.move-up:hover{ 
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+
+}
