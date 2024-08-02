@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
+use App\Models\Songs;
 use Illuminate\Http\Request;
 
 class LibraryController extends Controller
@@ -11,7 +13,11 @@ class LibraryController extends Controller
      */
     public function index()
     {
-        //
+        $user_id = auth()->user()->id;
+        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->get();
+        return Inertia::render('Setlist', [
+            'songs' => ['data' => $songs]
+        ]);
     }
 
     /**

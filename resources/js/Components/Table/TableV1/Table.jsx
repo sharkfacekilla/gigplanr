@@ -12,6 +12,7 @@ import { useState } from "react";
 import EditSongModal from '@/Components/Modals/EditSongModal';
 
 export default function Table({ songs }) {
+    console.log(songs);
     const [song, setSong] = useState(null);
     const [editSongModal, setEditSongModal] = useState(false);
 

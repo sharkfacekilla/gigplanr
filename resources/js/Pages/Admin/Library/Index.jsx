@@ -5,6 +5,7 @@ import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function Index({ auth, songs }) {
+    console.log(songs);
     const [newSongModal, setNewSongModal] = useState(false);
 
     const openModal = () => {

@@ -21,6 +21,7 @@ class Songs extends Model
         'key',
         'tuning',
         'cover',
-        'metronome'
+        'metronome',
+        'status'
     ];
 }

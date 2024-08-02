@@ -33,7 +33,7 @@ class StoreNewSongRequest extends FormRequest
             'tuning' => ['nullable', 'string', 'max:255'],
             'cover' => ['nullable', 'boolean'],
             'metronome' => ['nullable', 'boolean'],
-
+            'status' => ['nullable', 'string'],
         ];
     }
 }

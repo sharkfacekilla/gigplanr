@@ -27,6 +27,7 @@ class SongResource extends JsonResource
             'tuning' => $this->tuning,
             'cover' => $this->cover,
             'metronome' => $this->metronome,
+            'status' => $this->status,
         ];
     }
 };

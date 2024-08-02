@@ -33,6 +33,7 @@ class UpdateSongRequest extends FormRequest
             'tuning' => ['nullable', 'string'],
             'cover' => ['nullable', 'boolean'],
             'metronome' => ['nullable', 'boolean'],
+            'status' => ['nullable', 'string'],
         ];
     }
 }

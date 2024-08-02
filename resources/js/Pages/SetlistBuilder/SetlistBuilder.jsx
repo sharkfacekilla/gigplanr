@@ -7,17 +7,16 @@ import { DndContext } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 
 export default function SetlistBuilder({ auth, songs }) {
+  console.log(songs.data);
+  const data = songs.data;
   const [setlist, setSetlist] = useState([
-    { id: 1, title: "Bohemian Rhapsody", artist: "Queen", duration: "5:55", key: "B♭ Major" },
-    { id: 2, title: "Stairway to Heaven", artist: "Led Zeppelin", duration: "8:02", key: "D Major" },
-    { id: 3, title: "Imagine", artist: "John Lennon", duration: "3:10", key: "C Major" },
+    // { id: 1, title: "Bohemian Rhapsody", artist: "Queen", duration: "5:55", key: "B♭ Major" },
+    // { id: 2, title: "Stairway to Heaven", artist: "Led Zeppelin", duration: "8:02", key: "D Major" },
+    // { id: 3, title: "Imagine", artist: "John Lennon", duration: "3:10", key: "C Major" },
   ]);
 
-  const [availableSongs, setAvailableSongs] = useState([
-    { id: 4, title: "Sweet Caroline", artist: "Neil Diamond", duration: "3:21", key: "G Major" },
-    { id: 5, title: "Wonderwall", artist: "Oasis", duration: "4:18", key: "G Major" },
-    { id: 6, title: "Smells Like Teen Spirit", artist: "Nirvana", duration: "5:01", key: "E Minor" },
-  ]);
+  const [availableSongs, setAvailableSongs] = useState([...data]);
+  console.log(availableSongs);
 
   const getSongPos = (id) => setlist.findIndex((setlist) => setlist.id === id);
 

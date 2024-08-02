@@ -63,3 +63,8 @@
   border-bottom: 1px solid rgba(34, 34, 34, 0.2); /* Updated to 50% opacity */
   margin: 0 10px;
 }
+/* Add this to your CSS file or style tag */
+.scrollable-container {
+  max-height: 80vh; /* Adjust this value based on your layout */
+  overflow-y: auto;
+}

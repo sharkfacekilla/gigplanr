@@ -18,9 +18,9 @@ class SongController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->get();
-        return Inertia::render('Setlist', [
-            'songs' => ['data' => $songs]
+        $songs = Songs::where('user_id', $user_id)->orderBy('id', 'desc')->paginate(10)->onEachSide(1);
+        return Inertia::render('Admin/Library/Index', [
+            'songs' => SongResource::collection($songs)
         ]);
     }
     
@@ -43,6 +43,7 @@ class SongController extends Controller
         $user_id = auth()->user()->id;
         foreach ($songs as $song) {
             $song['user_id'] = $user_id;
+            $song['status'] = "other";
             Songs::create($song);
         }
         return redirect()->route('library.index');
@@ -51,6 +52,7 @@ class SongController extends Controller
     public function storeNew(StoreNewSongRequest $request) 
     {
         $data = $request->validated();
+        dd($data);
         $data['user_id'] = auth()->user()->id;
         if ($request->hasFile('album_cover')) {
             $file = $request->file('album_cover');
@@ -84,14 +86,7 @@ class SongController extends Controller
     public function update(UpdateSongRequest $request, Songs $song)
     {        
         $data = $request->validated();
-        // dd($request->hasFile('album_cover'));
-        // if ($request->hasFile('album_cover')) {
-        //     $file = $request->file('album_cover');
-        //     $filename = time() . '_' . $file->getClientOriginalName();
-        //     $file->move(public_path(), $filename);
-        //     $data['album_cover'] = $filename;    
-        // }
-        // dd($data);
+        
         $song->update($data);
     }
 

@@ -48,9 +48,11 @@ export default function NewSongModal({ show, onClose, song }) {
                 album: song.album,
                 album_cover: song.album_cover,
                 artist: song.artist,
+                status: song.status,
             });
             setMinutes(minutes);
             setSeconds(seconds);
+            console.log(song.status);
         }
     }, [song]);
 
@@ -100,6 +102,9 @@ export default function NewSongModal({ show, onClose, song }) {
         formData.append('tuning', data.tuning);
         formData.append('cover', data.cover);
         formData.append('metronome', data.metronome);
+        formData.append('status', data.status);
+        console.log('Form Data:', Array.from(formData.entries())); // Log form data
+
         handleConvert();
         put(route('songs.update', song), data);
         console.log(data);
@@ -172,6 +177,16 @@ export default function NewSongModal({ show, onClose, song }) {
                             </select>
                         </div>
                     </div>
+                </div>
+                <div className="flex flex-col mt-8 w-full">
+                    <InputLabel htmlFor="status" className="text-nowrap text-xs text-dark-black mb-1 ms-1 mt-6" value="Song Status" />
+                    <select id="status" name="status" defaultValue="" onChange={(e) => setData("status", e.target.value)} className="block py-2.5 px-0 w-full text-sm text-dark-black bg-transparent border-0 border-b border-dark-black/20 appearance-none focus:outline-none focus:ring-0 focus:border-teal peer">
+                        <option value="" disabled>SelectStatus</option>
+                        <option value="staple">Staple</option>
+                        <option value="most_often">Most Often</option>
+                        <option value="rarities">Rarities</option>
+                        <option value="other">Everything Else</option>
+                    </select>
                 </div>
                 <div className="flex flex-col mt-8 w-full">
                     <button className="block py-2.5 px-4 w-full text-sm text-dark-black bg-gray-200 rounded-lg border border-dark-black/20 focus:outline-none focus:ring-0 focus:border-teal hover:bg-gray-300" onClick={handleClick}>Album Cover</button>

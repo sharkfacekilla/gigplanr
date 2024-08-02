@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('tuning')->nullable();
             $table->boolean('cover')->default(false)->nullable();
             $table->boolean('metronome')->default(false)->nullable();
+            $table->string('status')->default("other")->nullable();
             $table->timestamps();
         });
     }
