@@ -1,0 +1,7 @@
+gigplanr logo: logo.com
+american idiot album cover: https://en.wikipedia.org/wiki/American_Idiot
+all the right reasons album cover https://en.wikipedia.org/wiki/All_the_Right_Reasons
+wave-bg-svg: https://haikei.app/
+no-img svg: https://www.svgrepo.com/svg/340721/no-image?edit=true
+some components made with v0 by vercel, commented where appropriate.
+album covers in library may come from spotify if added through that route.
